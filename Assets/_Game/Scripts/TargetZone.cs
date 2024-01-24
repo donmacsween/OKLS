@@ -1,31 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TargetZone : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Tower attachedTower;
+    void Awake()                
     {
-        
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Enemy")
-        {
-
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void RegisterTower(GameObject tower)
-    {
-
-    }
+        if (attachedTower == null) { attachedTower = transform.parent.gameObject.GetComponent<Tower>(); }   
+    }    
+    //These events are prefiltered to ojects on the "Enemies" layer only.
+    private void OnTriggerEnter (Collider other) { attachedTower.AddToTargetList(other.gameObject.GetComponent<Enemy>() ); }
+    private void OnTriggerExit  (Collider other) { attachedTower.RemoveFromTargetList(other.gameObject.GetComponent<Enemy>() ); }       
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Tower : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class Tower : MonoBehaviour
     // Tower mechanics
     [SerializeField]    private Transform   targetZone            = null;
                         private Transform   firingPoint           = null; // a transform on the tower weapon from which ammunition is fired
-                        private List<Enemy> targetlist            = null; 
+                        private List<Enemy> targetList            = new List<Enemy>(); 
                         private bool        hasActiveTargets      = false;
                         private bool        targetIsAquired       = false;
                         private bool        isDestroyed           = false;
@@ -34,19 +35,12 @@ public class Tower : MonoBehaviour
         {
             // The target zone gameobject MUST be the first child of the tower
             targetZone = this.gameObject.transform.GetChild(0);
-            if (targetZone != null )
-            {
-                Debug.LogError("No target zone on " + this.name + " tower");
-            }
-
-
+            if (targetZone != null ) {Debug.LogError("No target zone on " + this.name + " tower");}
         }
-
     }
-
     void Update()
     {
-        if (hasActiveTargets)
+        if (targetList.Count > 0)
         {
             MaintainTargetList();
             SelectTarget();
@@ -56,49 +50,33 @@ public class Tower : MonoBehaviour
             }
         }
     }
-
-    
-
     private void MaintainTargetList()
-    {
-        hasActiveTargets = false;
-        for (int i = 0; i < targetlist.Count; i++)
+    {     
+        for (int i = 0; i < targetList.Count; i++)
         {
-            if (targetlist[i].isDead)
+            if (targetList[i].isDead)
             {
-                RemoveFromTargetList(i);
-                // score
+                Debug.Log(targetList[i].gameObject.name + " died");
+                targetList.RemoveAt(i);
             }
-            else
-            {
-                hasActiveTargets = true; // check logic
-            }
-        }
+        }   
     }
-    public void AddToTargetList(Enemy enemy)
+    public void AddToTargetList(Enemy target)
     {
         // this is called from the targetzone gameobject's collider when a enemy enters the trigger zone
-        targetlist.Add(enemy);
-        hasActiveTargets = true;
+        Debug.Log(target.gameObject.name + " entered");
+        targetList.Add(target);
     }
-
-    public void EnemyLeftTargetZone(Enemy target)
+    public void RemoveFromTargetList(Enemy target)
     {
         // this is called from the targetzone gameobject's collider when a enemy leaves the trigger zone
-        targetlist.Remove(target);
+        Debug.Log(target.gameObject.name + " escaped");
+        targetList.Remove(target);
     }
-
-    private void RemoveFromTargetList(int indexPosition)
-    {
-        targetlist.RemoveAt(indexPosition);
-    }
-    
-
     private void SelectTarget()
     {
-        currentTargetLocation = targetlist[0].transform;
-        // raycast to target
-
+        currentTargetLocation = targetList[0].transform;
+        RotateToTarget(currentTargetLocation);
     }
 
     private void RotateToTarget(Transform target)

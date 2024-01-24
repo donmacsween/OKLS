@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class Tower : MonoBehaviour
 {
@@ -19,7 +17,7 @@ public class Tower : MonoBehaviour
                         private float       repairCostMultiplier  = 0.5f;
     // Tower mechanics
     [SerializeField]    private Transform   targetZone            = null;
-                        private Transform   firingPoint           = null; // a transform on the tower weapon from which ammunition is fired
+    [SerializeField]    private Transform   firingPoint           = null; // a transform on the tower weapon from which ammunition is fired
                         private List<Enemy> targetList            = new List<Enemy>(); 
                         private bool        hasActiveTargets      = false;
                         private bool        targetIsAquired       = false;
@@ -28,6 +26,8 @@ public class Tower : MonoBehaviour
                         private float       singleStep            = 0f;
                         private Vector3     targetDirection;
                         private Vector3     newDirection;
+                        private float       nextFire = 0.0f;
+                        
 
     private void Awake()
     {
@@ -35,8 +35,16 @@ public class Tower : MonoBehaviour
         {
             // The target zone gameobject MUST be the first child of the tower
             targetZone = this.gameObject.transform.GetChild(0);
-            if (targetZone != null ) {Debug.LogError("No target zone on " + this.name + " tower");}
+            if (targetZone == null ) {Debug.LogError("No target zone on " + this.name + " tower");}
         }
+        if (firingPoint == null)
+        {
+            // The firingPoint gameobject MUST be the secong child of the tower
+            firingPoint = this.gameObject.transform.GetChild(1);
+            if (firingPoint == null) { Debug.LogError("No firing Point on " + this.name + " tower"); }
+        }
+
+        // Apply SOs here
     }
     void Update()
     {
@@ -44,10 +52,6 @@ public class Tower : MonoBehaviour
         {
             MaintainTargetList();
             SelectTarget();
-            if (targetIsAquired) // firing time
-            {
-                FireAtTarget();
-            }
         }
     }
     private void MaintainTargetList()
@@ -61,22 +65,23 @@ public class Tower : MonoBehaviour
             }
         }   
     }
-    public void AddToTargetList(Enemy target)
-    {
-        // this is called from the targetzone gameobject's collider when a enemy enters the trigger zone
-        Debug.Log(target.gameObject.name + " entered");
-        targetList.Add(target);
-    }
-    public void RemoveFromTargetList(Enemy target)
-    {
-        // this is called from the targetzone gameobject's collider when a enemy leaves the trigger zone
-        Debug.Log(target.gameObject.name + " escaped");
-        targetList.Remove(target);
-    }
+    // this is called from the targetzone gameobject's collider when a enemy enters the trigger zone
+    public void AddToTargetList(Enemy target) {targetList.Add(target);}
+
+    // this is called from the targetzone gameobject's collider when a enemy leaves the trigger zone
+    public void RemoveFromTargetList(Enemy target) {targetList.Remove(target);}
     private void SelectTarget()
     {
         currentTargetLocation = targetList[0].transform;
-        RotateToTarget(currentTargetLocation);
+        //  Raycast to selected target
+        //  if (target visible)
+        //  {
+        //  FireAtTarget()
+        //  }
+        //  else
+        //  {
+            RotateToTarget(currentTargetLocation);
+        //  }
     }
 
     private void RotateToTarget(Transform target)
@@ -85,14 +90,16 @@ public class Tower : MonoBehaviour
         singleStep          = turnSpeed * Time.deltaTime;
         newDirection        = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
         transform.rotation  = Quaternion.LookRotation(newDirection);
-#if UNITY_EDITOR
-        Debug.DrawRay(transform.position, newDirection, Color.red);
-#endif
     }
 
     private void FireAtTarget()
     {
-        //
+        if (Time.time > nextFire)
+        {
+            nextFire = Time.time + fireRate;
+            // Instantiate(projectile, transform.position, transform.rotation);
+            //  pooling
+        }
     }
 
     // Tower Damage

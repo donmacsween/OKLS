@@ -5,9 +5,9 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    public  bool isDead;
-    private float health;
-    [SerializeField] private Transform destination;
+    public  bool isDead = false;
+    public float health = 20f;
+    public Transform destination;
     private NavMeshAgent agent;
 
     private void Awake()
@@ -19,6 +19,21 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        agent.destination = destination.position;
+        if (isDead == false)
+        {
+            agent.destination = destination.position;
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0f)
+        {
+            isDead = true;
+            agent.isStopped=true;
+            Destroy(this.gameObject,1f);
+            
+        }
     }
 }

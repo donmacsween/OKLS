@@ -10,15 +10,20 @@ public class Tower : MonoBehaviour
                         private float       Maxhealth             = 100f; 
                         private float       health                = 100f; 
                         private float       armour                = 5f;
-                        private float       turnSpeed             = 1f;
-                        private float       fireRate              = 1f;
+                        private float       turnSpeed             = 5f;
+                        private float       fireRate              = .7f;
                         private float       range                 = 10f;
                         private float       damageMultiplier      = 1f;
                         private float       repairCostMultiplier  = 0.5f;
     // Tower mechanics
+    [SerializeField]    private Rigidbody   ammoPrefab;
+    [SerializeField]    private float       ammoVelocity          =2f;
     [SerializeField]    private Transform   targetZone            = null;
     [SerializeField]    private Transform   firingPoint           = null; // a transform on the tower weapon from which ammunition is fired
-                        private List<Enemy> targetList            = new List<Enemy>(); 
+    [SerializeField]    private LayerMask   raycastMask;
+                        private List<Enemy> targetList            = new List<Enemy>();
+    
+    [SerializeField]    private Vector3     targetOffset;
                         private bool        hasActiveTargets      = false;
                         private bool        targetIsAquired       = false;
                         private bool        isDestroyed           = false;
@@ -26,6 +31,7 @@ public class Tower : MonoBehaviour
                         private float       singleStep            = 0f;
                         private Vector3     targetDirection;
                         private Vector3     newDirection;
+                        private RaycastHit  hit;
                         private float       nextFire = 0.0f;
                         
 
@@ -43,7 +49,7 @@ public class Tower : MonoBehaviour
             firingPoint = this.gameObject.transform.GetChild(1);
             if (firingPoint == null) { Debug.LogError("No firing Point on " + this.name + " tower"); }
         }
-
+       
         // Apply SOs here
     }
     void Update()
@@ -55,13 +61,16 @@ public class Tower : MonoBehaviour
         }
     }
     private void MaintainTargetList()
-    {     
-        for (int i = 0; i < targetList.Count; i++)
+    {
+        if (targetList.Count > 0)
         {
-            if (targetList[i].isDead)
+            for (int i = 0; i < targetList.Count; i++)
             {
-                Debug.Log(targetList[i].gameObject.name + " died");
-                targetList.RemoveAt(i);
+                if (targetList[i].isDead)
+                {
+                    Debug.Log(targetList[i].gameObject.name + " died");
+                    targetList.RemoveAt(i);
+                }
             }
         }   
     }
@@ -72,16 +81,18 @@ public class Tower : MonoBehaviour
     public void RemoveFromTargetList(Enemy target) {targetList.Remove(target);}
     private void SelectTarget()
     {
-        currentTargetLocation = targetList[0].transform;
-        //  Raycast to selected target
-        //  if (target visible)
-        //  {
-        //  FireAtTarget()
-        //  }
-        //  else
-        //  {
+        if (targetList.Count > 0)
+        {
+            currentTargetLocation = targetList[0].transform;
             RotateToTarget(currentTargetLocation);
-        //  }
+            Physics.Raycast(firingPoint.position, firingPoint.TransformDirection(Vector3.forward), out hit, range, raycastMask);
+            Debug.DrawRay(firingPoint.position, firingPoint.TransformDirection(Vector3.forward) * range, Color.white);
+            if (hit.collider != null)
+            {
+                Debug.DrawRay(firingPoint.position, firingPoint.TransformDirection(Vector3.forward) * range, Color.red);
+                FireAtTarget();
+            }
+        }
     }
 
     private void RotateToTarget(Transform target)
@@ -89,16 +100,21 @@ public class Tower : MonoBehaviour
         targetDirection     = target.position - transform.position;
         singleStep          = turnSpeed * Time.deltaTime;
         newDirection        = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+        
         transform.rotation  = Quaternion.LookRotation(newDirection);
+        //transform.rotation  = Quaternion.LookRotation(newDirection,target.position); //  figure out rotation
     }
 
     private void FireAtTarget()
     {
-        if (Time.time > nextFire)
+        
+        if (Time.time > fireRate + nextFire)
         {
-            nextFire = Time.time + fireRate;
-            // Instantiate(projectile, transform.position, transform.rotation);
-            //  pooling
+            Rigidbody hitPlayer;
+            hitPlayer = Instantiate(ammoPrefab, firingPoint.position, firingPoint.rotation) as Rigidbody;
+            hitPlayer.velocity = transform.TransformDirection((Vector3.forward + targetOffset) * ammoVelocity);
+            nextFire = Time.time;
+            Debug.Log("fired!"+nextFire.ToString());
         }
     }
 

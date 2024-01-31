@@ -16,7 +16,7 @@ MonoBehaviour:
   useFlatLighting: 1
   renderQueueIndex: 0
   color: {r: 0, g: 0.723927, b: 1, a: 0.72156864}
-  specColor: {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 1}
+  specColor: {r: 0.8584906, g: 0.8058473, b: 0.8058473, a: 1}
   smoothness: 0.904
   enableLightAbsorption: 0
   depthColor: {r: 0, g: 0.45, b: 0.65, a: 0.85}
@@ -33,7 +33,7 @@ MonoBehaviour:
   slopeFoamStrength: 0.5
   slopeFoamFlowSpeed: 20
   slopeFoamDistance: 50
-  rippleHeight: 0.153
+  rippleHeight: 0.828
   rippleSpeed: 5
   rippleNoiseScale: 1.5
   enableWave: 0
@@ -43,8 +43,8 @@ MonoBehaviour:
   waveLength: 30
   waveSteepness: 0.9
   waveDeform: 0.2
-  fresnelStrength: 0
-  fresnelBias: 0
+  fresnelStrength: 0.62
+  fresnelBias: 0.137
   enableReflection: 0
   reflectionTextureResolution: 32
   enableReflectionPixelLight: 0

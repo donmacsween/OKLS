@@ -1,0 +1,117 @@
+Core Mechanics 
+
+ 
+Towers 
+
+31/1/24 
+
+Tower functionality complete, track and rotate towards enemies, fire when in range 
+
+Script properties in place for differing tower types, ammo, health 
+
+ 
+
+Tower Placement 
+
+31/1/24 
+
+TBC 
+
+Focus area for 7/2/24 
+
+ 
+
+Tower Upgrades 
+
+31/1/24 
+
+Script Ready – need to complete in game GUI 
+
+ 
+
+Terrain with paths 
+31/1/24 
+
+Basic isometric test/tutorial level complete can be sculpted easily 
+
+Using Nav Mesh, with tiles tagged as path to easily bake new pathways. 
+
+ 
+
+Enemies with pathing 
+
+31/1/24 
+
+Enemies spawn in a path to player base 
+
+Asset packs acquired, just need to import models for different enemy types. 
+
+Need to think about how to differentiate enemy types when zoomed out on a small screen. 
+
+ 
+
+Power ups  
+
+TBC 
+
+ 
+
+Resource Management (Earn and spend gold) 
+
+31/1/24 
+
+Plan in place to earn gold via destroying enemies, weighted to enemy type. Plan to earn gems on level completion to unlock tower types  in between levels. 
+
+Plan to implement passive –tick income 
+
+ 
+
+Enemy Waves 
+
+31/1/24 
+
+Scripting done just need to add other models and animations to test 
+
+ 
+
+Objectives 
+
+31/1/24 
+
+Wave manager detect no more enemies to spawn 
+
+ 
+
+Progression 
+
+31/1/24 
+
+Ideas established tbc when 1st level done 
+
+ 
+
+Menus and UI 
+
+31/1/24 
+
+Main Menu, Shop, Settings, Credits and New Game / Continue/ Level Select : Complete with suitable background music - few adjustments needed for target size 
+
+Setting menu implemented though not yet  
+
+Map implemented, just need to mask regions so they aren’t rectangular as touch targets currently overlap 
+
+ 
+
+In game UI to be done 
+
+Notes 
+
+31/1/24 
+
+Would like to implement drag to move 
+
+ 
+
+ 
+
+ 

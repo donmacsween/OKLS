@@ -9,7 +9,7 @@
                     "name": "Click",
                     "type": "Value",
                     "id": "7e675762-85e3-4b99-889c-9e41ea4d8540",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true

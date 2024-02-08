@@ -3,37 +3,40 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Enemy : MonoBehaviour
-{
-    public  bool isDead = false;
-    public float health = 20f;
-    public Transform destination;
-    private NavMeshAgent agent;
 
-    private void Awake()
+
+    public class Enemy : MonoBehaviour
     {
-        agent = GetComponent<NavMeshAgent>();
-    }
+        public bool isDead = false;
+        public float health = 20f;
+        public Transform destination;
+        private NavMeshAgent agent;
 
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (isDead == false)
+        private void Awake()
         {
-            agent.destination = destination.position;
+            agent = GetComponent<NavMeshAgent>();
+        }
+
+
+        // Update is called once per frame
+        void Update()
+        {
+            if (isDead == false)
+            {
+                agent.destination = destination.position;
+            }
+        }
+
+        public void TakeDamage(float damage)
+        {
+            health -= damage;
+            if (health <= 0f)
+            {
+                isDead = true;
+                agent.isStopped = true;
+                Destroy(this.gameObject, 1f);
+
+            }
         }
     }
 
-    public void TakeDamage(float damage)
-    {
-        health -= damage;
-        if (health <= 0f)
-        {
-            isDead = true;
-            agent.isStopped=true;
-            Destroy(this.gameObject,1f);
-            
-        }
-    }
-}

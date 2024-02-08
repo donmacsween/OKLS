@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 227246227fcdcb844bd016a9080d5cd9, type: 3}
   m_Name: ArrowTower1
   m_EditorClassIdentifier: 
-  towerPrefab: {fileID: 3779728598326333521, guid: 930b62fb07a337b42976f91dd40614a0,
+  towerPrefab: {fileID: 101867685027149952, guid: 930b62fb07a337b42976f91dd40614a0,
     type: 3}
   towerName: Arrow  1
   towerCost: 50

@@ -12,7 +12,7 @@ public class Ammo : MonoBehaviour
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
             enemy.TakeDamage(ammoDamage);
-            //Destroy(this.gameObject);
+            Destroy(this.gameObject);
         }
     }
 }

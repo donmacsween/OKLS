@@ -12,7 +12,7 @@ public class MapRoller : MonoBehaviour
     [SerializeField] private float      rollValue;
     [SerializeField] private GameObject mapButtons;
                      private bool        unrolling       = true;
-    void OnEnable()
+    void Awake()
     {
         rend = GetComponent<Renderer>();
         rollValue = closedRollValue;
@@ -24,13 +24,13 @@ public class MapRoller : MonoBehaviour
     {       
            if (rollValue >= closedRollValue && unrolling==false)
            {
-                rollValue -= rollSpeed;
+                rollValue -= rollSpeed * Time.deltaTime;
                 rend.material.SetFloat("Vector1_98d33b1d219b486e97f4a6d459a007a3", rollValue);
            }
             
         if ((rollValue < openRollValue) && unrolling == true)
         {
-                rollValue += rollSpeed;
+                rollValue += rollSpeed * Time.deltaTime;
                 rend.material.SetFloat("Vector1_98d33b1d219b486e97f4a6d459a007a3", rollValue);
         }
         if (rollValue >= 1) {mapButtons.SetActive(true);}

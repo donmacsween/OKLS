@@ -42,15 +42,5 @@ public class UIManager : MonoBehaviour
         ActivePanel = null;
     }
 
-    public void FadeIn(GameObject panel)
-    {
-       
-    }
-    public void FadeOut(GameObject panel)
-    {
-
-    }
-
-
 
 }

@@ -31,12 +31,7 @@ public class SpawnManager : MonoBehaviour
             Instance = this;
         }
     }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-     
+         
     public void StartWave(int waveNumber)
     {
         wavePopulation = waves[currentWave].Enemies.Length;

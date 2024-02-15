@@ -8,29 +8,27 @@ using UnityEngine;
         //                                                                      and Ammo scriptableObjects.
         // [SerializeField] private TurretType turretType;
         // [SerializeField] private string      ammoType; //  change to SO
-        private float Maxhealth            = 100f;
-        private float health               = 100f;
-        private float armour               = 5f;
+                         private float Maxhealth            = 100f;
+                         private float health               = 100f;
+                         private float armour               = 5f;
         [SerializeField] private float turnSpeed            = 10f;
         [SerializeField] private float heightOffset         = 2f;
         [SerializeField] private float fireRate             = .7f;
-        private float range                = 10f;
-        private float damageMultiplier     = 2f;
-        private float repairCostMultiplier = 0.5f;
+                         private float range                = 10f;
+                         private float damageMultiplier     = 2f;
+                         private float repairCostMultiplier = 0.5f;
         // Tower mechanics
         [SerializeField] private Rigidbody   ammoPrefab;
         [SerializeField] private float       ammoVelocity   = 30f;
-        [SerializeField] private Transform   targetZone     = null;                 // a cylindrical mesh colliider used to  detecect enemies
+        [SerializeField] private Transform   targetZone     = null;                 // a cylindrical mesh colliider used to detecect enemies
         [SerializeField] private Transform   firingPoint    = null;                 // a transform on the tower weapon from which ammunition is fired
         [SerializeField] private LayerMask   raycastMask;                           // a mask used to only target enemies
                          private List<Enemy> targetList     = new List<Enemy>();
 
         [SerializeField] private Vector3    targetOffset;
-                         
                          private Transform  currentTargetLocation = null;
                          private float      singleStep = 20f;
                          private Vector3    targetDirection; // The vector of the  current  target
-                         
                          private RaycastHit hit;
                          private float      nextFire = 0.0f;
 

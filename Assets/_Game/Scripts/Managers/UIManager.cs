@@ -35,11 +35,14 @@ public class UIManager : MonoBehaviour
         if (ActivePanel != null) { ActivePanel.SetActive(false); }
         ActivePanel = panel;
         panel.SetActive(true);
+        Time.timeScale = 0.0f;
     }
-    public void HidePanel(GameObject panel) 
+    public void HidePanel() 
     {
         ActivePanel.SetActive(false);
-        ActivePanel = null;
+        ActivePanel = null; 
+        Time.timeScale = 1.0f;
+
     }
 
 

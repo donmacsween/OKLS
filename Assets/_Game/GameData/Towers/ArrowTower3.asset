@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 227246227fcdcb844bd016a9080d5cd9, type: 3}
+  m_Name: ArrowTower3
+  m_EditorClassIdentifier: 
+  towerPrefab: {fileID: 896014552459344205, guid: aaf87422d639ae94493ba528e885b267,
+    type: 3}
+  towerName: Arrow  3
+  towerCost: 500
+  towerIcon: {fileID: 21300000, guid: 5169bc4e1a551734ca59b071889005db, type: 3}
+  towerUnlocked: 1

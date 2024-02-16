@@ -37,7 +37,7 @@ public class TowerManager : MonoBehaviour
     {
         newTower = Instantiate(tower.towerPrefab,activeTowerBase.buildPoint.position,activeTowerBase.buildPoint.rotation);
         activeTowerBase.built = true;
-        UIManager.Instance.HidePanel(UIManager.Instance.TowerPurchasePanel);
+        UIManager.Instance.HidePanel();
         Debug.Log("Placed");
     }
 

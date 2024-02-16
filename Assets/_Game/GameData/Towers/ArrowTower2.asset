@@ -17,4 +17,5 @@ MonoBehaviour:
   towerName: Arrow  2
   towerCost: 500
   towerIcon: {fileID: 21300000, guid: 9c71e25d2fe9c4b029afefe7bfdeccd2, type: 3}
+  towerIcon: {fileID: 21300000, guid: 631773714e4b17841b4c11a645216ec9, type: 3}
   towerUnlocked: 1

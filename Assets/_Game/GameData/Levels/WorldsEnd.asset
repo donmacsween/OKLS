@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ce244f536dd7e442a9be54ed276769b, type: 3}
+  m_Name: WorldsEnd
+  m_EditorClassIdentifier: 
+  sceneName: WorldsEnd
+  background: {fileID: 21300000, guid: 87d34f1e09e8e4749a44d03090615178, type: 3}
+  music: {fileID: 8300000, guid: 868de21550633644f8f9fca01e1dfa57, type: 3}
+  nextLevel: {fileID: 0}

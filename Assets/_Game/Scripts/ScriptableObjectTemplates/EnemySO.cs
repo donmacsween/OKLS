@@ -1,17 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
-
-
-[CreateAssetMenu(fileName = "Enemy", menuName = "GameData/Wave", order = 1)]
+[CreateAssetMenu(fileName = "Enemy", menuName = "GameData/Enemy")]
 public class EnemySO : ScriptableObject
 {
-    public string       enemyType;
-    public GameObject   enemyPrefab;
-    public float        baseHealth;
-    public float        baseSpeed;
-    public float        baseArmour;
-    public int          baseMoney;
-    public int          baseCastleDamage;
+    public string       enemyType           ="";
+    public GameObject   enemyPrefab         = null;
+    public float        baseHealth          = 10f;
+    public float        baseSpeed           = 1f;
+    public float        baseArmour          = 0.2f;
+    public int          baseMoney           = 1;
+    public int          baseCastleDamage    = 5;
+    public int          baseTowerDamage     = 2;
 }

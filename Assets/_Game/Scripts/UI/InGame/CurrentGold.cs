@@ -1,18 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CurrentGold : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private TMP_Text goldLable;    
+    
+    private void Awake()
     {
-        
+        if (goldLable == null) {goldLable=gameObject.GetComponent<TMP_Text>();} 
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnEnable()
+    {    
+        MoneyManager.OnMoneyUpdated += UpdateGold;
+        UpdateGold();
+    }
+    void OnDisable() 
     {
-        
+        MoneyManager.OnMoneyUpdated -= UpdateGold;
+    }
+    private void UpdateGold() 
+    {
+        if (MoneyManager.Instance != null)
+        {
+            goldLable.text = MoneyManager.Instance.currentGold.ToString();
+        }
     }
 }

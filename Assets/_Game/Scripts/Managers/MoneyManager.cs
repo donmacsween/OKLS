@@ -23,6 +23,7 @@ public class MoneyManager : MonoBehaviour
         {
             Instance = this;
         }
+        MoneyTickStart();
     }
     public void AddMoney (int amount)
     {

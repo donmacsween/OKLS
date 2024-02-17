@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent (typeof(Collider))]
 public class Base : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // prefiltered to enemy layer
+        // Tell the BaseManager.cs to deduct health equivelent to enemy's baseDamage
+        BaseManager.Instance.DeductHealth(other.gameObject.GetComponent<Enemy>().baseDamage);
+        // SpawnManager.Instance.ReturnToPool(other.gameObject.GetComponent<Enemy>());
     }
 }

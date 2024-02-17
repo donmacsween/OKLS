@@ -3,20 +3,29 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    // Singleton Instance
-    public static SpawnManager Instance { get; private set; }
+   
+    // Event to notify of money change
     
+    public static SpawnManager Instance { get; private set; }
+    public delegate void UpdateSpawnData();
+    public static event UpdateSpawnData OnSpawnDataUpdated;
+
+    // For HUD data
+    public List<Enemy> activeEnemies;
+    public int wavePopulation = 0;
+    public int wavesRemaining = 0;
+
     [SerializeField] private float       spawnRate;
     [SerializeField] private Transform   sceneHolder;
     [SerializeField] private Enemy       prefab;
     [SerializeField] private Transform   spawnPoint;
     [SerializeField] private Transform   destination;
                      private Enemy       spawned;
-    [SerializeField] private List<Enemy> activeEnemies;
     [SerializeField] private WaveSO[]    waves;
     [SerializeField] private int         currentWave = 0;
     [SerializeField] private int         currentEnemy = 0;
-    [SerializeField] private int         wavePopulation = 0;
+    
+                     
    
 
     private void Awake()
@@ -30,6 +39,7 @@ public class SpawnManager : MonoBehaviour
         {
             Instance = this;
         }
+        wavesRemaining = waves.Length;
     }
          
     public void StartWave(int waveNumber)
@@ -41,10 +51,11 @@ public class SpawnManager : MonoBehaviour
     }
     private void EndWave() 
     { 
-        CancelInvoke(); 
+        CancelInvoke();
         // if last wave
         //  Award money
         //  Show UI
+        //  OnSpawnDataUpdated();
     }
 
 
@@ -63,15 +74,19 @@ public class SpawnManager : MonoBehaviour
             currentEnemy++;
             spawned.destination = destination;
             activeEnemies.Add(spawned);
+            OnSpawnDataUpdated();
         }
     }
 
     public void EnemyKilled(Enemy enemy)
     { 
     activeEnemies.Remove(enemy);
+        OnSpawnDataUpdated();
         if (activeEnemies.Count == 0)
         {
             EndWave();
         }
     }
+
+    
 }

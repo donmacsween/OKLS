@@ -2,8 +2,11 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
 
+
 public class InputManager : MonoBehaviour
 {
+
+    public static InputManager Instance { get; private set; }
     //
     [SerializeField] private Camera                     camera              =null;
     [SerializeField] private LayerMask                  towerLayer;
@@ -20,11 +23,21 @@ public class InputManager : MonoBehaviour
                      private bool                       pointerDown         = false;
                      private Vector2                    lastPosition        = Vector2.zero;
                      private float                      dragSensitivity     = 5f;
+                     public  Vector4                    bounds; // Set from the bounds.cs script OnEnable.
 
 
     // Start is called before the first frame update
     void Awake()
     {
+        // singleton logic
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
         // fallback for not setting the camera in the inspector
         if (camera == null) { camera = Camera.main; }
         // fallback for not setting the camera focus target in the inspector
@@ -76,6 +89,12 @@ public class InputManager : MonoBehaviour
     private void MoveCameraTarget()
     {
         cameraFocusTarget.transform.position += new Vector3(Pointer.current.delta.value.x, 0, Pointer.current.delta.value.y) * dragSensitivity * Time.deltaTime;
+
+
+        if(cameraFocusTarget.transform.position.z > bounds.w) { cameraFocusTarget.transform.position = new Vector3(cameraFocusTarget.transform.position.x,0f,bounds.w); }
+        if(cameraFocusTarget.transform.position.z < bounds.y) { cameraFocusTarget.transform.position = new Vector3(cameraFocusTarget.transform.position.x,0f,bounds.y); }
+        if(cameraFocusTarget.transform.position.x > bounds.x) { cameraFocusTarget.transform.position = new Vector3(bounds.x,0f, cameraFocusTarget.transform.position.z); }
+        if(cameraFocusTarget.transform.position.x < bounds.z) { cameraFocusTarget.transform.position = new Vector3(bounds.z,0f, cameraFocusTarget.transform.position.z); }
     }
 
     public void Power1()

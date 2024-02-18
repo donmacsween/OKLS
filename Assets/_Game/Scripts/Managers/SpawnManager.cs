@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private Transform   destination;
                      private Enemy       spawned;
     [SerializeField] private WaveSO[]    waves;
+    [SerializeField] private EnemySO[]   spawnedEnemy;
     [SerializeField] private int         currentWave = 0;
     [SerializeField] private int         currentEnemy = 0;
     
@@ -40,14 +42,21 @@ public class SpawnManager : MonoBehaviour
             Instance = this;
         }
         wavesRemaining = waves.Length;
+        activeEnemies = new List<Enemy>();
     }
-         
+
+    private void Start()
+    {
+        StartWave(currentWave);
+    }
+
+
     public void StartWave(int waveNumber)
     {
         wavePopulation = waves[currentWave].Enemies.Length;
         currentWave = waveNumber;
         currentEnemy = 0;
-        InvokeRepeating("SpawnWave", 0f, waves[currentWave].spawnInterval);
+        InvokeRepeating("SpawnEnemy", 0f, waves[currentWave].spawnInterval);
     }
     private void EndWave() 
     { 
@@ -56,25 +65,52 @@ public class SpawnManager : MonoBehaviour
         //  Award money
         //  Show UI
         //  OnSpawnDataUpdated();
+        Debug.Log("Wave Over");
+        currentWave++; 
+        if (currentWave < wavesRemaining)
+        {
+            
+            StartWave(currentWave);
+        }
+        else
+        {
+            Debug.Log("all out");
+            CancelInvoke();
+        }
     }
 
 
 
     private void SpawnEnemy()
     {
+        
+
         if (currentEnemy < wavePopulation) 
         {
+            Debug.Log(waves[currentWave].Enemies[currentEnemy].enemyPrefab.name.ToString());
+            prefab = waves[currentWave].Enemies[currentEnemy].enemyPrefab.GetComponent<Enemy>();
+            // Instanciate the prefab
             spawned = Instantiate
-            (
-            waves[currentWave].Enemies[currentEnemy].enemyPrefab.GetComponent<Enemy>(),
+            (prefab,
             spawnPoint.position,
             Quaternion.identity,
-            gameObject.transform
+            sceneHolder
             );
-            currentEnemy++;
+            spawned.gameObject.SetActive(true);
             spawned.destination = destination;
+
+            
+            spawned.GetComponent<NavMeshAgent>().speed = waves[currentWave].Enemies[currentEnemy].baseSpeed;
+            prefab.enemySO = waves[currentWave].Enemies[currentEnemy];
+            prefab.baseDamage = waves[currentWave].Enemies[currentEnemy].baseCastleDamage;
+            
             activeEnemies.Add(spawned);
-            OnSpawnDataUpdated();
+            currentEnemy++;
+            //OnSpawnDataUpdated();
+        }
+        else
+        {
+            EndWave();
         }
     }
 

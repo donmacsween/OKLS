@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
     public class Enemy : MonoBehaviour
     {
-    [SerializeField] EnemySO              enemySO;    
+                     public EnemySO      enemySO;    
                      public bool         isDead     = false;
                      private float        health     = 20f;
                      public int           baseDamage = 5;
@@ -52,10 +52,11 @@ using UnityEngine.AI;
     private void Die()
     {
     isDead = true;
-    agent.isStopped = true;
-    Destroy(this.gameObject, 1f);
-    // play death animation
-    // do return to pool
+    agent.Stop();
+    Destroy(this.gameObject, 0f);
+        // play death animation
+        // do return to pool
+        MoneyManager.Instance.AddMoney(baseDamage);
     }
     private void AttackTower()
     { 
@@ -65,6 +66,10 @@ using UnityEngine.AI;
     public void Dissolve()
     {
     // pending
+    }
+    private void ReturnToPool()
+    {
+        //pendinng
     }
 }
 

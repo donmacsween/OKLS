@@ -30,8 +30,8 @@ public class BaseManager : MonoBehaviour
     {
         currentHealth -= amount;
         if (currentHealth <= 0) 
-        { 
-        // The player has failed the level
+        {
+            UIManager.Instance.ShowPanel(UIManager.Instance.DefeatPanel);
         }
         if (currentHealth > (maxHealth/100)*10)
         {

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -7487,7 +7487,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeEnemies: []
   wavePopulation: 0
-  wavesRemaining: 0
+  totalWaves: 0
+  currentWave: 0
+  currentEnemy: 0
   spawnRate: 0
   sceneHolder: {fileID: 316549572}
   prefab: {fileID: 0}
@@ -7497,8 +7499,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 74d93a969222d7845a434b294dc9d7c5, type: 2}
   - {fileID: 11400000, guid: 74d93a969222d7845a434b294dc9d7c5, type: 2}
   spawnedEnemy: []
-  currentWave: 0
-  currentEnemy: 0
 --- !u!1 &1677154644
 GameObject:
   m_ObjectHideFlags: 0
@@ -24114,7 +24114,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &3967583302981069987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29069,7 +29069,7 @@ MonoBehaviour:
   LevelStartPanel: {fileID: 0}
   TowerUpgradePanel: {fileID: 9134943614999326440}
   WinPanel: {fileID: 0}
-  DefeatPanel: {fileID: 0}
+  DefeatPanel: {fileID: 3796416627817496599}
   DialogPanel: {fileID: 0}
   ActivePanel: {fileID: 0}
 --- !u!1660057539 &9223372036854775807

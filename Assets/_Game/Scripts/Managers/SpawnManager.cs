@@ -14,7 +14,9 @@ public class SpawnManager : MonoBehaviour
     // For HUD data
     public List<Enemy> activeEnemies;
     public int wavePopulation = 0;
-    public int wavesRemaining = 0;
+    public int totalWaves = 0;
+    public int currentWave = 0;
+    public int currentEnemy = 0;
 
     [SerializeField] private float       spawnRate;
     [SerializeField] private Transform   sceneHolder;
@@ -24,8 +26,7 @@ public class SpawnManager : MonoBehaviour
                      private Enemy       spawned;
     [SerializeField] private WaveSO[]    waves;
     [SerializeField] private EnemySO[]   spawnedEnemy;
-    [SerializeField] private int         currentWave = 0;
-    [SerializeField] private int         currentEnemy = 0;
+   
     
                      
    
@@ -41,7 +42,7 @@ public class SpawnManager : MonoBehaviour
         {
             Instance = this;
         }
-        wavesRemaining = waves.Length;
+        totalWaves = waves.Length;
         activeEnemies = new List<Enemy>();
     }
 
@@ -67,10 +68,11 @@ public class SpawnManager : MonoBehaviour
         //  OnSpawnDataUpdated();
         Debug.Log("Wave Over");
         currentWave++; 
-        if (currentWave < wavesRemaining)
+        if (currentWave < totalWaves)
         {
             
             StartWave(currentWave);
+            OnSpawnDataUpdated();
         }
         else
         {
@@ -106,7 +108,7 @@ public class SpawnManager : MonoBehaviour
             
             activeEnemies.Add(spawned);
             currentEnemy++;
-            //OnSpawnDataUpdated();
+            OnSpawnDataUpdated();
         }
         else
         {

@@ -89,12 +89,22 @@ public class InputManager : MonoBehaviour
     private void MoveCameraTarget()
     {
         cameraFocusTarget.transform.position += new Vector3(Pointer.current.delta.value.x, 0, Pointer.current.delta.value.y) * dragSensitivity * Time.deltaTime;
-
-
-        if(cameraFocusTarget.transform.position.z > bounds.w) { cameraFocusTarget.transform.position = new Vector3(cameraFocusTarget.transform.position.x,0f,bounds.w); }
+        // restrain to bounds
+        if (cameraFocusTarget.transform.position.z > bounds.w) { cameraFocusTarget.transform.position = new Vector3(cameraFocusTarget.transform.position.x,0f,bounds.w); }
         if(cameraFocusTarget.transform.position.z < bounds.y) { cameraFocusTarget.transform.position = new Vector3(cameraFocusTarget.transform.position.x,0f,bounds.y); }
         if(cameraFocusTarget.transform.position.x > bounds.x) { cameraFocusTarget.transform.position = new Vector3(bounds.x,0f, cameraFocusTarget.transform.position.z); }
         if(cameraFocusTarget.transform.position.x < bounds.z) { cameraFocusTarget.transform.position = new Vector3(bounds.z,0f, cameraFocusTarget.transform.position.z); }
+    }
+
+    public void MoveCameraTarget(Transform location)
+    {
+        cameraFocusTarget.transform.position = location.position;
+        // restrain to bounds
+        if (cameraFocusTarget.transform.position.y > 0) { cameraFocusTarget.transform.position = new Vector3(cameraFocusTarget.transform.position.x, 0f, cameraFocusTarget.transform.position.z);}
+        if (cameraFocusTarget.transform.position.z > bounds.w) { cameraFocusTarget.transform.position = new Vector3(location.position.x, 0f, bounds.w); }
+        if (cameraFocusTarget.transform.position.z < bounds.y) { cameraFocusTarget.transform.position = new Vector3(location.position.x, 0f, bounds.y); }
+        if (cameraFocusTarget.transform.position.x > bounds.x) { cameraFocusTarget.transform.position = new Vector3(bounds.x, 0f, location.position.z); }
+        if (cameraFocusTarget.transform.position.x < bounds.z) { cameraFocusTarget.transform.position = new Vector3(bounds.z, 0f, location.position.z); }
     }
 
     public void Power1()

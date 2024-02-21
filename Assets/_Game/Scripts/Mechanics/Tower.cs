@@ -35,18 +35,6 @@ using UnityEngine;
 
         private void Awake()
         {
-            if (targetZone == null)
-            {
-                // The target zone gameobject MUST be the first child of the tower
-                targetZone = this.gameObject.transform.GetChild(0);
-                if (targetZone == null) { Debug.LogError("No target zone on " + this.name + " tower"); }
-            }
-            if (firingPoint == null)
-            {
-                // The firingPoint gameobject MUST be the second child of the tower
-                firingPoint = this.gameObject.transform.GetChild(1);
-                if (firingPoint == null) { Debug.LogError("No firing Point on " + this.name + " tower"); }
-            }
 
             // Apply SOs here
         }
@@ -64,11 +52,7 @@ using UnityEngine;
             {
                 for (int i = 0; i < targetList.Count; i++)
                 {
-                    if (targetList[i].isDead)
-                    {
-                        Debug.Log(targetList[i].gameObject.name + " died");
-                        targetList.RemoveAt(i);
-                    }
+                    if (targetList[i].isDead) {targetList.RemoveAt(i);}
                 }
             }
         }
@@ -85,11 +69,7 @@ using UnityEngine;
                 RotateToTarget(currentTargetLocation);
                 Physics.Raycast(firingPoint.position, firingPoint.TransformDirection(Vector3.forward), out hit, range, raycastMask);
                 Debug.DrawRay(firingPoint.position, firingPoint.TransformDirection(Vector3.forward) * range, Color.white);
-                if (hit.collider != null)
-                {
-                    //Debug.DrawRay(firingPoint.position, firingPoint.TransformDirection(Vector3.forward) * range, Color.red);
-                    FireAtTarget();
-                }
+                if (hit.collider != null) {FireAtTarget();}
             }
         }
 
@@ -104,16 +84,13 @@ using UnityEngine;
 
         private void FireAtTarget()
         {
-
             if (Time.time > fireRate + nextFire)
             {
                 Rigidbody hitPlayer;
-                
                 hitPlayer = Instantiate(ammoPrefab, firingPoint.position, transform.rotation) as Rigidbody;
                 hitPlayer.gameObject.GetComponent<Ammo>().ammoDamage = hitPlayer.gameObject.GetComponent<Ammo>().ammoDamage * damageMultiplier;
                 hitPlayer.velocity = transform.TransformDirection((Vector3.forward + targetOffset) * ammoVelocity);
                 nextFire = Time.time;
-                Debug.Log("fired!" + nextFire.ToString());
             }
         }
 
@@ -121,10 +98,7 @@ using UnityEngine;
         public void TakeDamage(float damage)
         {
             health = health - (damage - armour);
-            if (health < 0)
-            {
-                DestroyTower();
-            }
+            if (health < 0) {DestroyTower();}
         }
 
         public void TakeDamageOverTime(float damage, float duration)

@@ -26,22 +26,11 @@ public class SpawnManager : MonoBehaviour
                      private Enemy       spawned;
     [SerializeField] private WaveSO[]    waves;
     [SerializeField] private EnemySO[]   spawnedEnemy;
-   
-    
-                     
-   
-
     private void Awake()
     {
         // singleton logic
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
+        if (Instance != null && Instance != this) {Destroy(this);}
+        else {Instance = this;}
         totalWaves = waves.Length;
         activeEnemies = new List<Enemy>();
     }
@@ -49,6 +38,7 @@ public class SpawnManager : MonoBehaviour
     private void Start()
     {
         StartWave(currentWave);
+        //  replace with call from UI
     }
 
 
@@ -57,7 +47,7 @@ public class SpawnManager : MonoBehaviour
         wavePopulation = waves[currentWave].Enemies.Length;
         currentWave = waveNumber;
         currentEnemy = 0;
-        InvokeRepeating("SpawnEnemy", 0f, waves[currentWave].spawnInterval);
+        InvokeRepeating("SpawnEnemy", 1f, waves[currentWave].spawnInterval);
     }
     private void EndWave() 
     { 
@@ -65,7 +55,6 @@ public class SpawnManager : MonoBehaviour
         // if last wave
         //  Award money
         //  Show UI
-        //  OnSpawnDataUpdated();
         Debug.Log("Wave Over");
         currentWave++; 
         if (currentWave < totalWaves)
@@ -80,13 +69,8 @@ public class SpawnManager : MonoBehaviour
             CancelInvoke();
         }
     }
-
-
-
     private void SpawnEnemy()
     {
-        
-
         if (currentEnemy < wavePopulation) 
         {
             Debug.Log(waves[currentWave].Enemies[currentEnemy].enemyPrefab.name.ToString());
@@ -98,33 +82,33 @@ public class SpawnManager : MonoBehaviour
             Quaternion.identity,
             sceneHolder
             );
+            // Set properties
             spawned.gameObject.SetActive(true);
-            spawned.destination = destination;
-
-            
+            spawned.destination = destination;      
             spawned.GetComponent<NavMeshAgent>().speed = waves[currentWave].Enemies[currentEnemy].baseSpeed;
+            spawned.health = waves[currentWave].Enemies[currentEnemy].baseHealth;
             prefab.enemySO = waves[currentWave].Enemies[currentEnemy];
             prefab.baseDamage = waves[currentWave].Enemies[currentEnemy].baseCastleDamage;
             
             activeEnemies.Add(spawned);
             currentEnemy++;
             OnSpawnDataUpdated();
+
+            Debug.Log("enemies" + activeEnemies.Count.ToString());
         }
         else
         {
             EndWave();
         }
     }
-
-    public void EnemyKilled(Enemy enemy)
+    public void DespawnEnemy(Enemy enemy)
     { 
-    activeEnemies.Remove(enemy);
+        activeEnemies.Remove(enemy);
         OnSpawnDataUpdated();
+        // check for win condition
         if (activeEnemies.Count == 0)
         {
             EndWave();
         }
     }
-
-    
 }

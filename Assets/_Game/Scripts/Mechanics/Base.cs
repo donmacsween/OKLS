@@ -8,6 +8,6 @@ public class Base : MonoBehaviour
         // prefiltered to enemy layer
         // Tell the BaseManager.cs to deduct health equivelent to enemy's baseDamage
         BaseManager.Instance.DeductHealth(other.gameObject.GetComponent<Enemy>().baseDamage);
-        // SpawnManager.Instance.ReturnToPool(other.gameObject.GetComponent<Enemy>());
+        SpawnManager.Instance.DespawnEnemy(other.GetComponent<Enemy>());
     }
 }

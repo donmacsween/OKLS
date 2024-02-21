@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
 
     public static InputManager Instance { get; private set; }
     //
-    [SerializeField] private Camera                     camera              =null;
+    [SerializeField] private Camera                     camera;
     [SerializeField] private LayerMask                  towerLayer;
                      private Ray                        ray;
                      private RaycastHit                 hit;

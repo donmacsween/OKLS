@@ -5,7 +5,7 @@ using UnityEngine.AI;
     {
                      public EnemySO      enemySO;    
                      public bool         isDead     = false;
-                     private float        health     = 20f;
+                     public float        health     = 20f;
                      public int           baseDamage = 5;
                      public Transform     destination;
                      private NavMeshAgent agent;
@@ -51,13 +51,29 @@ using UnityEngine.AI;
 
     private void Die()
     {
-    isDead = true;
-    agent.Stop();
-    Destroy(this.gameObject, 0f);
+        isDead = true;
+        agent.isStopped = true; 
+        this.gameObject.SetActive(false);
+        SpawnManager.Instance.DespawnEnemy(this);
+        MoneyManager.Instance.AddMoney(baseDamage);
+        Destroy(this.gameObject, .5f);
         // play death animation
         // do return to pool
-        MoneyManager.Instance.AddMoney(baseDamage);
     }
+    private void Success()
+    {
+        isDead = true;
+        agent.isStopped = true;
+        this.gameObject.SetActive(false);
+        SpawnManager.Instance.DespawnEnemy(this);
+        
+        Destroy(this.gameObject, .5f);
+        // play death animation
+        // do return to pool
+    }
+
+
+
     private void AttackTower()
     { 
     // pending
@@ -67,9 +83,6 @@ using UnityEngine.AI;
     {
     // pending
     }
-    private void ReturnToPool()
-    {
-        //pendinng
-    }
+   
 }
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -28846,6 +28846,7 @@ GameObject:
   - component: {fileID: 2546407235302827504}
   - component: {fileID: 5350453179146630631}
   - component: {fileID: 9153319003182857029}
+  - component: {fileID: 9153319003182857030}
   m_Layer: 5
   m_Name: WavesButton
   m_TagString: Untagged
@@ -29053,6 +29054,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &9153319003182857030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9041323924261297793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 333b041c4707921439aaadeec3dfc671, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wavesRemainingLabel: {fileID: 303762524}
+  enemyCount: {fileID: 6187005324394394219}
+  slider: {fileID: 1391646974}
 --- !u!114 &9175128283602628826
 MonoBehaviour:
   m_ObjectHideFlags: 0

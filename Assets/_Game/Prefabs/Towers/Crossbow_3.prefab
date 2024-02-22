@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 626233855511490846}
   - component: {fileID: 4639341408719188014}
   - component: {fileID: 8854283533656242993}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: TargetZone3
   m_TagString: Untagged
   m_Icon: {fileID: 0}

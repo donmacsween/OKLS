@@ -1,7 +1,7 @@
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
-
+using System.Collections;
 
 public class InputManager : MonoBehaviour
 {
@@ -62,9 +62,11 @@ public class InputManager : MonoBehaviour
         lastPosition = Pointer.current.position.value;
         if (context.phase.ToString() == "Started")
         {
+            
             ray = camera.ScreenPointToRay(Pointer.current.position.value);
             if (Physics.Raycast(ray, hitInfo: out hit) && hit.collider)
             {
+                Debug.Log(hit.collider.gameObject.layer.ToString());
                 if (hit.collider.gameObject.layer == 8 && !hit.collider.gameObject.GetComponent<TowerBase>().built)
                 {
                     TowerManager.Instance.SetActiveTowerBase(hit.collider.gameObject.GetComponent<TowerBase>());
@@ -126,14 +128,26 @@ public class InputManager : MonoBehaviour
 
     public void ZoomIn()
     {
+        StartCoroutine(IZoomIn());
+    }
+
+    IEnumerator IZoomIn()
+    {
         virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset =
             Vector3.Lerp(
                 virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset,
                 (zoomIncrement * zoomInValue),
                 zoomSpeed
                 );
+        yield return null;
     }
+
     public void ZoomOut()
+    {
+        StartCoroutine (IZoomOut());
+    }
+
+    IEnumerator IZoomOut()
     {
         virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset =
             Vector3.Lerp(
@@ -141,6 +155,7 @@ public class InputManager : MonoBehaviour
                 (zoomIncrement * zoomOutValue),
                 zoomSpeed
                 );
+        yield return null;
     }
 
 

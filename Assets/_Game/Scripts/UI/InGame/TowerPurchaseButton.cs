@@ -57,6 +57,7 @@ public class TowerPurchaseButton : MonoBehaviour
     {
         // towermanager placeTower
         Debug.Log("Purchased");
+        MoneyManager.Instance.DeductMoney(type.towerCost);
         TowerManager.Instance.PlaceTower(type);
     }
 }

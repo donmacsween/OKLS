@@ -32,9 +32,13 @@ using UnityEngine;
                          private RaycastHit hit;
                          private float      nextFire = 0.0f;
 
+        [SerializeField] private AudioClip[] fireSounds;
+        [SerializeField] private AudioSource soundSource;
+
 
         private void Awake()
         {
+        if (soundSource == null) {soundSource = GetComponent<AudioSource>();}
 
             // Apply SOs here
         }
@@ -91,6 +95,7 @@ using UnityEngine;
                 hitPlayer.gameObject.GetComponent<Ammo>().ammoDamage = hitPlayer.gameObject.GetComponent<Ammo>().ammoDamage * damageMultiplier;
                 hitPlayer.velocity = transform.TransformDirection((Vector3.forward + targetOffset) * ammoVelocity);
                 nextFire = Time.time;
+               // AudioSource.PlayClipAtPoint(fireSounds[Random.Range(0, fireSounds.Length-1)], gameObject.transform.position);
             }
         }
 

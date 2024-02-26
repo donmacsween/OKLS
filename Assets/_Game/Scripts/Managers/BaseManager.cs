@@ -9,6 +9,9 @@ public class BaseManager : MonoBehaviour
     public static event     UpdateBaseHealth OnBaseHealthUpdated;
     public int              currentHealth = 200;
     private int             maxHealth = 0;
+    // This is set by the GameManager.cs on level load
+    public                  Transform baseTransform;
+
 
     private void Awake()
     {

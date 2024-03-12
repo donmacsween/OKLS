@@ -4,43 +4,51 @@ using UnityEngine;
 
     public class Tower : MonoBehaviour
     {
-        // Tower Attributes                                                     All of the properties below have values allocated by the towertype
-        //                                                                      and Ammo scriptableObjects.
-        // [SerializeField] private TurretType turretType;
-        // [SerializeField] private string      ammoType; //  change to SO
-                         private float Maxhealth            = 100f;
-                         private float health               = 100f;
-                         private float armour               = 5f;
-        [SerializeField] private float turnSpeed            = 10f;
-        [SerializeField] private float heightOffset         = 2f;
-        [SerializeField] private float fireRate             = .7f;
-                         private float range                = 10f;
-                         private float damageMultiplier     = 2f;
-                         private float repairCostMultiplier = 0.5f;
-        // Tower mechanics
-        [SerializeField] private Rigidbody   ammoPrefab;
-        [SerializeField] private float       ammoVelocity   = 30f;
-        [SerializeField] private Transform   targetZone     = null;                 // a cylindrical mesh colliider used to detecect enemies
-        [SerializeField] private Transform   firingPoint    = null;                 // a transform on the tower weapon from which ammunition is fired
-        [SerializeField] private LayerMask   raycastMask;                           // a mask used to only target enemies
-                         private List<Enemy> targetList     = new List<Enemy>();
+        
+    [SerializeField]    private TowerTypeSO     towerType;
 
-        [SerializeField] private Vector3    targetOffset;
-                         private Transform  currentTargetLocation = null;
-                         private float      singleStep = 20f;
-                         private Vector3    targetDirection; // The vector of the  current  target
-                         private RaycastHit hit;
-                         private float      nextFire = 0.0f;
+                        //Health
+                        private float           health                  = 0f; 
+                        private float           healthUpgradeLevel      = 0f;
+                        //FireRate
+                        private float           fireRate                = 0f;
+                        private float           fireRateUpgradeLevel    = 0f;
+                        //Range
+                        private float           range                   = 0f;
+                        private float           rangeUpgradeLevel       = 0f;
+                        //Damage
+                        private float           damageMultiplier        = 1f;
+                        private float           damageUpgradeLevel      = 0f;
+                        
+                        private float           repairCostMultiplier    = 0.5f;
+                         
+    [SerializeField]    private float           turnSpeed               = 10f;
+    [SerializeField]    private float           heightOffset            = 2f;
+    [SerializeField]    private Rigidbody       ammoPrefab;
+    [SerializeField]    private float           ammoVelocity            = 30f;
+    [SerializeField]    private Transform       targetZone              = null; // a cylindrical mesh colliider used to detecect enemies
+    [SerializeField]    private Transform       firingPoint             = null; // a transform on the tower weapon from which ammunition is fired
+    [SerializeField]    private LayerMask       raycastMask;                    // a mask used to only target enemies
+                        private List<Enemy>     targetList              = new List<Enemy>();
+    [SerializeField]    private Vector3         targetOffset;
+                        private Transform       currentTargetLocation   = null;
+                        private float           singleStep              = 20f;
+                        private Vector3         targetDirection;                // The vector of the  current  target
+                        private RaycastHit      hit;
+                        private float           nextFire                = 0.0f;
 
-        [SerializeField] private AudioClip[] fireSounds;
-        [SerializeField] private AudioSource soundSource;
+    [SerializeField]    private AudioClip[]     fireSounds;
+    [SerializeField]    private AudioSource     soundSource;
 
 
         private void Awake()
         {
         if (soundSource == null) {soundSource = GetComponent<AudioSource>();}
 
-            // Apply SOs here
+        health   = towerType.health;
+        fireRate = towerType.fireRate;
+        range    = towerType.range;
+        fireSounds = towerType.fireSounds;
         }
         void Update()
         {
@@ -95,22 +103,21 @@ using UnityEngine;
                 hitPlayer.gameObject.GetComponent<Ammo>().ammoDamage = hitPlayer.gameObject.GetComponent<Ammo>().ammoDamage * damageMultiplier;
                 hitPlayer.velocity = transform.TransformDirection((Vector3.forward + targetOffset) * ammoVelocity);
                 nextFire = Time.time;
-               // AudioSource.PlayClipAtPoint(fireSounds[Random.Range(0, fireSounds.Length-1)], gameObject.transform.position);
+                if (towerType.fireSounds.Length>0) 
+                {
+                AudioSource.PlayClipAtPoint(towerType.fireSounds[Random.Range(0, towerType.fireSounds.Length - 1)], gameObject.transform.position);
+                }
             }
         }
 
         // Tower Damage
         public void TakeDamage(float damage)
         {
-            health = health - (damage - armour);
+            health = health - (damage);
             if (health < 0) {DestroyTower();}
         }
 
-        public void TakeDamageOverTime(float damage, float duration)
-        {
-            // later
-        }
-
+       
         private void DestroyTower()
         {
             // play destruction anim
@@ -131,7 +138,7 @@ using UnityEngine;
         }
         public int GetRepairCost()
         {
-            return Mathf.RoundToInt((Maxhealth - health) * repairCostMultiplier);
+            return Mathf.RoundToInt((towerType.health - health) * repairCostMultiplier);
         }
 
         public int GetTowerHealth()

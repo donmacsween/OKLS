@@ -9,13 +9,14 @@ public class InputManager : MonoBehaviour
     public static InputManager Instance { get; private set; }
     //
     [SerializeField] private Camera                     camera;
+    [SerializeField] private bool                       invertMovement = false;
     [SerializeField] private LayerMask                  towerLayer;
                      private Ray                        ray;
                      private RaycastHit                 hit;
     // Camera zoom fields
     [SerializeField] private CinemachineVirtualCamera   virtualCamera;
     [SerializeField] private float                      zoomInValue = 50;
-    [SerializeField] private float                      zoomOutValue = 200;
+    [SerializeField] private float                      zoomOutValue = 160;
     [SerializeField] private float                      zoomSpeed = 3f;
                      private Vector3                    zoomIncrement;
     // Camera panning fields
@@ -90,12 +91,21 @@ public class InputManager : MonoBehaviour
 
     private void MoveCameraTarget()
     {
-        cameraFocusTarget.transform.position += new Vector3(Pointer.current.delta.value.x, 0, Pointer.current.delta.value.y) * dragSensitivity * Time.deltaTime;
+        if (invertMovement)
+        {
+            cameraFocusTarget.transform.position += new Vector3(-Pointer.current.delta.value.x, 0, -Pointer.current.delta.value.y) * dragSensitivity * Time.deltaTime;
+        }
+        else
+        {
+            cameraFocusTarget.transform.position += new Vector3(Pointer.current.delta.value.x, 0, Pointer.current.delta.value.y) * dragSensitivity * Time.deltaTime;
+        }
+       
         // restrain to bounds
-        if (cameraFocusTarget.transform.position.z > bounds.w) { cameraFocusTarget.transform.position = new Vector3(cameraFocusTarget.transform.position.x,0f,bounds.w); }
-        if(cameraFocusTarget.transform.position.z < bounds.y) { cameraFocusTarget.transform.position = new Vector3(cameraFocusTarget.transform.position.x,0f,bounds.y); }
-        if(cameraFocusTarget.transform.position.x > bounds.x) { cameraFocusTarget.transform.position = new Vector3(bounds.x,0f, cameraFocusTarget.transform.position.z); }
-        if(cameraFocusTarget.transform.position.x < bounds.z) { cameraFocusTarget.transform.position = new Vector3(bounds.z,0f, cameraFocusTarget.transform.position.z); }
+       if (cameraFocusTarget.transform.position.z > bounds.w) { cameraFocusTarget.transform.position = new Vector3(cameraFocusTarget.transform.position.x,0f,bounds.w); }
+       if(cameraFocusTarget.transform.position.z < bounds.y) { cameraFocusTarget.transform.position = new Vector3(cameraFocusTarget.transform.position.x,0f,bounds.y); }
+       if(cameraFocusTarget.transform.position.x > bounds.x) { cameraFocusTarget.transform.position = new Vector3(bounds.x,0f, cameraFocusTarget.transform.position.z); }
+       if(cameraFocusTarget.transform.position.x < bounds.z) { cameraFocusTarget.transform.position = new Vector3(bounds.z,0f, cameraFocusTarget.transform.position.z); }
+
     }
 
     public void MoveCameraTarget(Transform location)

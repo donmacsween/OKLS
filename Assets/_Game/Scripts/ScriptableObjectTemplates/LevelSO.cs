@@ -8,7 +8,8 @@ public class LevelSO : ScriptableObject
     public AudioClip    music;
     public LevelSO      nextLevel;
     public int          startingGold;
+    public int          startingHealth;
     public Transform[]  spawnpoints;
-    public WaveSO       waves;
+    public WaveSO[]     waves;
     public DialogSO     startingDialog;
 }

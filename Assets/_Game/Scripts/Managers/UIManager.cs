@@ -7,7 +7,8 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
     public GameObject TowerPurchasePanel;
-    public GameObject LevelStartPanel;
+    public GameObject ObjectivesPanel;
+    public GameObject PowersShopPanel;
     public GameObject TowerUpgradePanel;
     public GameObject WinPanel;
     public GameObject DefeatPanel;

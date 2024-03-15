@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: Skeleton
   enemyPrefab: {fileID: 192428, guid: c26833473ce06df4ba5631fd7a4b98bc, type: 3}
-  baseHealth: 2
+  baseHealth: 50
   baseSpeed: 1
   baseArmour: 0.1
   baseMoney: 1
   baseCastleDamage: 5
-  baseTowerDamage: 2
+  baseTowerDamage: 10

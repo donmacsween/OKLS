@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,21 +8,21 @@ using UnityEngine;
         
     [SerializeField]    private TowerTypeSO     towerType;
 
-                        //Health
-                        private float           health                  = 0f; 
-                        private float           healthUpgradeLevel      = 0f;
+    //Health
+    [SerializeField]    private float           health                  = 0f; 
+                        private float           healthUpgradeLevel      = 1f;
                         //FireRate
                         private float           fireRate                = 0f;
-                        private float           fireRateUpgradeLevel    = 0f;
+                        private float           fireRateUpgradeLevel    = 1f;
                         //Range
                         private float           range                   = 0f;
-                        private float           rangeUpgradeLevel       = 0f;
+                        private float           rangeUpgradeLevel       = 1f;
                         //Damage
                         private float           damageMultiplier        = 1f;
-                        private float           damageUpgradeLevel      = 0f;
+                        private float           damageUpgradeLevel      = 1f;
                         
                         private float           repairCostMultiplier    = 0.5f;
-                         
+                        public  TowerBase       towerBase;
     [SerializeField]    private float           turnSpeed               = 10f;
     [SerializeField]    private float           heightOffset            = 2f;
     [SerializeField]    private Rigidbody       ammoPrefab;
@@ -49,6 +50,7 @@ using UnityEngine;
         fireRate = towerType.fireRate;
         range    = towerType.range;
         fireSounds = towerType.fireSounds;
+        towerBase = TowerManager.Instance.activeTowerBase;
         }
         void Update()
         {
@@ -105,7 +107,7 @@ using UnityEngine;
                 nextFire = Time.time;
                 if (towerType.fireSounds.Length>0) 
                 {
-                AudioSource.PlayClipAtPoint(towerType.fireSounds[Random.Range(0, towerType.fireSounds.Length - 1)], gameObject.transform.position);
+                AudioSource.PlayClipAtPoint(towerType.fireSounds[UnityEngine.Random.Range(0, towerType.fireSounds.Length - 1)], gameObject.transform.position);
                 }
             }
         }
@@ -121,18 +123,30 @@ using UnityEngine;
         private void DestroyTower()
         {
             // play destruction anim
-            // 
+            // Clear the towerbase flag so we can build again
+            towerBase.built = false;
+            // Remove this tower from the list of alive towers
+            TowerManager.Instance.towers.Remove(this);
+            // Remove the gameobject from the scene
+            Destroy(this.transform.parent.gameObject);
+            // Record in the stats that we have lost a tower
+            ObjectiveManager.Instance.towersLost++;
         }
 
         // Player Actions
 
         private void PlayerDestroyTower()
         {
-            // play destruction anim
-            // 
-        }
+        // play destruction anim
+        // Calculate the cashback based on % health
+        float cashback = (towerType.towerCost / 100) * (health / (towerType.health / 100));
+        MoneyManager.Instance.AddMoney(Convert.ToInt32(cashback));
+        towerBase.built = false;
+        // Remove the gameobject from the scene
+        Destroy(this.transform.parent.gameObject);
+    }
 
-        public void PlayerApplyUpgrade()
+    public void PlayerApplyUpgrade()
         {
             //later
         }

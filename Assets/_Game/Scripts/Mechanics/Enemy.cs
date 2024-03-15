@@ -3,13 +3,12 @@ using UnityEngine.AI;
 
     public class Enemy : MonoBehaviour
     {
-                     public EnemySO      enemySO;    
-                     public bool         isDead     = false;
-                     public float        health     = 20f;
-                     public int           baseDamage = 5;
-                     public Transform     destination;
-                     private NavMeshAgent agent;
-                     private Animator     animator;
+                     public EnemySO         enemySO;    
+                     public bool            isDead     = false;
+                     public float           health     = 20f;
+                     public int             baseDamage = 5;
+                     public Transform       destination;
+                     private NavMeshAgent   agent;
 
     private void Awake()
     {
@@ -17,23 +16,7 @@ using UnityEngine.AI;
         {
             Debug.LogError("No scriptable object set on :" + this.gameObject.name);
         }
-        else
-        {
-
-        }
-
         agent    = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (isDead == false)
-        {
-            agent.destination = destination.position;
-            // need to do ev frame ???
-        }
     }
     public void SetDestination (Transform destination)
     {
@@ -43,12 +26,7 @@ using UnityEngine.AI;
     {
         health -= damage-enemySO.baseArmour;
         if (health <= 0f) { Die();}
-        else 
-        {
-            // do hit animation        
-        }
     }
-
     private void Die()
     {
         isDead = true;
@@ -57,32 +35,6 @@ using UnityEngine.AI;
         SpawnManager.Instance.DespawnEnemy(this);
         MoneyManager.Instance.AddMoney(baseDamage);
         Destroy(this.gameObject, .5f);
-        // play death animation
-        // do return to pool
     }
-    private void Success()
-    {
-        isDead = true;
-        agent.isStopped = true;
-        this.gameObject.SetActive(false);
-        SpawnManager.Instance.DespawnEnemy(this);
-        
-        Destroy(this.gameObject, .5f);
-        // play death animation
-        // do return to pool
-    }
-
-
-
-    private void AttackTower()
-    { 
-    // pending
-    }
-
-    public void Dissolve()
-    {
-    // pending
-    }
-   
 }
 

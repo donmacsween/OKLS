@@ -58,7 +58,7 @@ public class InputManager : MonoBehaviour
         zoomIncrement = virtualCamera.GetCinemachineComponent<CinemachineTransposer>().m_FollowOffset.normalized;
     }
         public void Click (InputAction.CallbackContext context)
-    {
+        {
         pointerDown = true;
         lastPosition = Pointer.current.position.value;
         if (context.phase.ToString() == "Started")

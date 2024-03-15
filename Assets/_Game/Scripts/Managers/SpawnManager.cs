@@ -17,6 +17,7 @@ public class SpawnManager : MonoBehaviour
     public int totalWaves = 0;
     public int currentWave = 0;
     public int currentEnemy = 0;
+    public int waveBonus = 0;
 
     [SerializeField] private float       spawnRate;
     [SerializeField] private Transform   sceneHolder;
@@ -45,18 +46,20 @@ public class SpawnManager : MonoBehaviour
     public void StartWave(int waveNumber)
     {
         wavePopulation = waves[currentWave].Enemies.Length;
+        waveBonus = waves[currentWave].waveBonus;
         currentWave = waveNumber;
         currentEnemy = 0;
         InvokeRepeating("SpawnEnemy", 1f, waves[currentWave].spawnInterval);
+
     }
     private void EndWave() 
     { 
         CancelInvoke();
-        // if last wave
-        //  Award money
-        //  Show UI
+        
+        currentWave++;
+        UIManager.Instance.ShowPanel(UIManager.Instance.WavePanel);
         Debug.Log("Wave Over");
-        currentWave++; 
+        
         if (currentWave < totalWaves)
         {
             
@@ -84,7 +87,8 @@ public class SpawnManager : MonoBehaviour
             );
             // Set properties
             spawned.gameObject.SetActive(true);
-            spawned.destination = destination;      
+            //spawned.destination = destination;      
+            spawned.SetDestination(destination);   
             spawned.GetComponent<NavMeshAgent>().speed = waves[currentWave].Enemies[currentEnemy].baseSpeed;
             spawned.health = waves[currentWave].Enemies[currentEnemy].baseHealth;
             prefab.enemySO = waves[currentWave].Enemies[currentEnemy];

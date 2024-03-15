@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     public GameObject WinPanel;
     public GameObject DefeatPanel;
     public GameObject DialogPanel;
+    public GameObject WavePanel;
     public GameObject ActivePanel;
     
 

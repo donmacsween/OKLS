@@ -469,9 +469,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec76e8efb6df5944b83fda50236c3098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerType: {fileID: 11400000, guid: a8577077ff9e6c24197b6bf1fab552e5, type: 2}
+  health: 0
+  towerBase: {fileID: 0}
   turnSpeed: 10
   heightOffset: 2
-  fireRate: 0.7
   ammoPrefab: {fileID: 7873749387562560547, guid: e4660632099c8a94c97543ab8b7ff747,
     type: 3}
   ammoVelocity: 20
@@ -481,3 +483,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   targetOffset: {x: 0, y: 0.2, z: 0}
+  fireSounds: []
+  soundSource: {fileID: 0}

@@ -21,7 +21,7 @@ public class Waypoint : MonoBehaviour
             {
                 randomChoice = 0;
             }
-            enemy.destination = nextWayPoints[randomChoice];
+            enemy.SetDestination(nextWayPoints[randomChoice]);
         }
     }
 }

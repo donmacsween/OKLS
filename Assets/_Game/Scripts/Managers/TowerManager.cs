@@ -6,10 +6,11 @@ public class TowerManager : MonoBehaviour
 {
     public static TowerManager  Instance { get; private set; }
 
-    [SerializeField] private TowerBase     activeTowerBase = null;
-    [SerializeField] private Tower          activeTower = null;
-    [SerializeField] private GameObject    towerContainer;
-    private GameObject newTower;
+                     public TowerBase      activeTowerBase = null;
+                     public Tower          activeTower     = null;
+    [SerializeField] private GameObject     towerContainer;
+                     private GameObject     newTower;
+                     public  List<Tower>    towers          = new List<Tower>();
 
     private void Awake()
     {
@@ -33,12 +34,17 @@ public class TowerManager : MonoBehaviour
         activeTower = tower;
         Debug.Log("TowerBase Set");
     }
+
+    public Tower GetActiveTower()
+    {
+        return activeTower;
+    }
     public void PlaceTower(TowerTypeSO tower)
     {
         newTower = Instantiate(tower.towerPrefab,activeTowerBase.buildPoint.position,activeTowerBase.buildPoint.rotation);
         activeTowerBase.built = true;
+        towers.Add(newTower.GetComponent<Tower>());
         UIManager.Instance.HidePanel();
-        Debug.Log("Placed");
     }
 
 }

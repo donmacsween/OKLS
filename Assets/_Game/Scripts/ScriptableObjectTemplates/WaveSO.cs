@@ -8,5 +8,6 @@ public class WaveSO : ScriptableObject
     public EnemySO[] Enemies;
     public float spawnInterval = 2f;
     public int waveBonus = 100;
-    
+    public DialogSO waveStartDialog;
+    public DialogSO waveEndDialog;
 }

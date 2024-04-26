@@ -75,7 +75,10 @@ public class InputManager : MonoBehaviour
                 }
                 if (hit.collider.gameObject.layer == 9)
                 {
-                    TowerManager.Instance.SetActiveTower(hit.collider.gameObject.GetComponent<Tower>());
+                    Transform parent = hit.collider.gameObject.transform.parent;
+                    Tower hitTower = parent.gameObject.GetComponentInChildren<Tower>();
+                    Debug.Log(parent.gameObject.name);
+                    TowerManager.Instance.SetActiveTower(hitTower);
                     UIManager.Instance.ShowPanel(UIManager.Instance.TowerUpgradePanel);
                 }
             }
@@ -87,6 +90,11 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         if (pointerDown && lastPosition != Pointer.current.position.value) {MoveCameraTarget();}
+    }
+
+    private void Start()
+    {
+        ZoomOut();
     }
 
     private void MoveCameraTarget()

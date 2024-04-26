@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public GameObject DialogPanel;
     public GameObject WavePanel;
     public GameObject ActivePanel;
+    public DialogSO   currentDialog;
     
 
 

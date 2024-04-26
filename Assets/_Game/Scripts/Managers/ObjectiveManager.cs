@@ -6,6 +6,7 @@ public class ObjectiveManager : MonoBehaviour
     public int                     towersLost     = 0;
     public int                     baseHealthLost = 0;
     public int                     enemiesKilled  = 0;
+    public int                     bossesKilled   = 0;     
 
 
     private void Awake()

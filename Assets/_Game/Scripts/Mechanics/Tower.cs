@@ -9,18 +9,21 @@ using UnityEngine;
     [SerializeField]    private TowerTypeSO     towerType;
 
     //Health
-    [SerializeField]    private float           health                  = 0f; 
-                        private float           healthUpgradeLevel      = 1f;
+                        public float            health                  = 0f;
+                        public float            maxHealth               = 0f;
+                        public float           healthUpgradeLevel      = 0f;
                         //FireRate
                         private float           fireRate                = 0f;
                         private float           fireRateUpgradeLevel    = 1f;
                         //Range
                         private float           range                   = 0f;
-                        private float           rangeUpgradeLevel       = 1f;
+                        public float           rangeUpgradeLevel       = 1f;
                         //Damage
                         private float           damageMultiplier        = 1f;
                         private float           damageUpgradeLevel      = 1f;
-                        
+
+                        private float           upgradeInprovement = 20f;
+                        public int towerCost;
                         private float           repairCostMultiplier    = 0.5f;
                         public  TowerBase       towerBase;
     [SerializeField]    private float           turnSpeed               = 10f;
@@ -47,10 +50,12 @@ using UnityEngine;
         if (soundSource == null) {soundSource = GetComponent<AudioSource>();}
 
         health   = towerType.health;
+        maxHealth = health;
         fireRate = towerType.fireRate;
         range    = towerType.range;
         fireSounds = towerType.fireSounds;
         towerBase = TowerManager.Instance.activeTowerBase;
+        towerCost = towerType.towerCost;
         }
         void Update()
         {
@@ -135,24 +140,24 @@ using UnityEngine;
 
         // Player Actions
 
-        private void PlayerDestroyTower()
+        public void PlayerDestroyTower()
         {
         // play destruction anim
         // Calculate the cashback based on % health
-        float cashback = (towerType.towerCost / 100) * (health / (towerType.health / 100));
+        float returnPercent = health * 100 / maxHealth;
+        float towerpercent = (float)towerType.towerCost / 100;
+        float cashback = towerpercent * returnPercent;
+        
         MoneyManager.Instance.AddMoney(Convert.ToInt32(cashback));
         towerBase.built = false;
         // Remove the gameobject from the scene
         Destroy(this.transform.parent.gameObject);
     }
 
-    public void PlayerApplyUpgrade()
-        {
-            //later
-        }
+    
         public int GetRepairCost()
         {
-            return Mathf.RoundToInt((towerType.health - health) * repairCostMultiplier);
+            return Mathf.RoundToInt((maxHealth - health) * repairCostMultiplier);
         }
 
         public int GetTowerHealth()
@@ -160,9 +165,18 @@ using UnityEngine;
             return Mathf.RoundToInt(health);
         }
 
-        public void PlayerRepairTower()
+    public void UpgradeHealth()
+    {
+        if (healthUpgradeLevel < 4)
         {
-            // later
+            float factor = maxHealth / 100 * upgradeInprovement;
+            maxHealth = maxHealth + factor;
+            health = health + factor;
+            if (health > maxHealth) { health = maxHealth; }
+            healthUpgradeLevel++;
         }
+    }
+
+
     }
 

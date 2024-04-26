@@ -18,7 +18,8 @@ namespace OKLS
         void UpdateStats()
         {
             // Get data from SpawnManageer.cs
-            wavesRemaining = (SpawnManager.Instance.totalWaves - SpawnManager.Instance.currentWave) - 1;
+            wavesRemaining = (SpawnManager.Instance.totalWaves - SpawnManager.Instance.currentWave);
+            //wavesRemaining = (SpawnManager.Instance.totalWaves - SpawnManager.Instance.currentWave) - 1;
             enemiesInWave = SpawnManager.Instance.wavePopulation;
             enemiesOut = SpawnManager.Instance.currentEnemy;
             // Change UI

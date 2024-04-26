@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyType: Skeleton Knight
   enemyPrefab: {fileID: 128260, guid: 616cc160fcb3b124b8e0fc587258594b, type: 3}
-  baseHealth: 50
+  baseHealth: 10
   baseSpeed: 1.2
   baseArmour: 0.1
   baseMoney: 1

@@ -3,21 +3,18 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class SpawnManager : MonoBehaviour
-{
-   
-    // Event to notify of money change
-    
-    public static SpawnManager Instance { get; private set; }
+{  
+    public static        SpawnManager       Instance { get; private set; }
     public delegate void UpdateSpawnData();
-    public static event UpdateSpawnData OnSpawnDataUpdated;
+    public static event  UpdateSpawnData    OnSpawnDataUpdated;
 
     // For HUD data
-    public List<Enemy> activeEnemies;
-    public int wavePopulation = 0;
-    public int totalWaves = 0;
-    public int currentWave = 0;
-    public int currentEnemy = 0;
-    public int waveBonus = 0;
+    public List<Enemy>  activeEnemies;
+    public int          wavePopulation  = 0;
+    public int          totalWaves      = 0;
+    public int          currentWave     = 0;
+    public int          currentEnemy    = 0;
+    public int          waveBonus       = 0;
 
     [SerializeField] private float       spawnRate;
     [SerializeField] private Transform   sceneHolder;
@@ -27,6 +24,7 @@ public class SpawnManager : MonoBehaviour
                      private Enemy       spawned;
     [SerializeField] private WaveSO[]    waves;
     [SerializeField] private EnemySO[]   spawnedEnemy;
+
     private void Awake()
     {
         // singleton logic
@@ -38,72 +36,51 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        StartWave(currentWave);
+        StartWave();
         //  replace with call from UI
     }
 
-
-    public void StartWave(int waveNumber)
+    public void StartWave()
     {
         wavePopulation = waves[currentWave].Enemies.Length;
         waveBonus = waves[currentWave].waveBonus;
-        currentWave = waveNumber;
         currentEnemy = 0;
         InvokeRepeating("SpawnEnemy", 1f, waves[currentWave].spawnInterval);
-
     }
     private void EndWave() 
     { 
+        
         CancelInvoke();
-        
         currentWave++;
-        UIManager.Instance.ShowPanel(UIManager.Instance.WavePanel);
-        Debug.Log("Wave Over");
-        
+        // Give the end of wave bonus
         if (currentWave < totalWaves)
         {
-            
-            StartWave(currentWave);
+            StartWave();
             OnSpawnDataUpdated();
         }
-        else
-        {
-            Debug.Log("all out");
+        else 
+        { 
             CancelInvoke();
+            //Win Panel
         }
     }
     private void SpawnEnemy()
     {
         if (currentEnemy < wavePopulation) 
         {
-            Debug.Log(waves[currentWave].Enemies[currentEnemy].enemyPrefab.name.ToString());
             prefab = waves[currentWave].Enemies[currentEnemy].enemyPrefab.GetComponent<Enemy>();
-            // Instanciate the prefab
-            spawned = Instantiate
-            (prefab,
-            spawnPoint.position,
-            Quaternion.identity,
-            sceneHolder
-            );
-            // Set properties
-            spawned.gameObject.SetActive(true);
-            //spawned.destination = destination;      
+            spawned = Instantiate (prefab, spawnPoint.position, Quaternion.identity, sceneHolder);
+            spawned.gameObject.SetActive(true);    
             spawned.SetDestination(destination);   
             spawned.GetComponent<NavMeshAgent>().speed = waves[currentWave].Enemies[currentEnemy].baseSpeed;
             spawned.health = waves[currentWave].Enemies[currentEnemy].baseHealth;
             prefab.enemySO = waves[currentWave].Enemies[currentEnemy];
             prefab.baseDamage = waves[currentWave].Enemies[currentEnemy].baseCastleDamage;
-            
             activeEnemies.Add(spawned);
             currentEnemy++;
             OnSpawnDataUpdated();
-
-            Debug.Log("enemies" + activeEnemies.Count.ToString());
         }
-        else
-        {
-            EndWave();
-        }
+        else {EndWave();}
     }
     public void DespawnEnemy(Enemy enemy)
     { 
@@ -112,6 +89,7 @@ public class SpawnManager : MonoBehaviour
         // check for win condition
         if (activeEnemies.Count == 0)
         {
+            Debug.Log("All Dead");
             EndWave();
         }
     }

@@ -32,7 +32,7 @@ public class TowerManager : MonoBehaviour
     public void SetActiveTower(Tower tower)
     {
         activeTower = tower;
-        Debug.Log("TowerBase Set");
+        Debug.Log("Tower " + tower.gameObject.name +" Set");
     }
 
     public Tower GetActiveTower()

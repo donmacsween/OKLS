@@ -11,16 +11,16 @@ using UnityEngine;
     //Health
                         public float            health                  = 0f;
                         public float            maxHealth               = 0f;
-                        public float           healthUpgradeLevel      = 0f;
-                        //FireRate
-                        private float           fireRate                = 0f;
-                        private float           fireRateUpgradeLevel    = 1f;
+                        public float            healthUpgradeLevel      = 1f;
+    //FireRate
+                        public float            fireRate                = 0f;
+                        public float            fireRateUpgradeLevel    = 1f;
                         //Range
                         private float           range                   = 0f;
-                        public float           rangeUpgradeLevel       = 1f;
+                        public float            rangeUpgradeLevel       = 1f;
                         //Damage
-                        private float           damageMultiplier        = 1f;
-                        private float           damageUpgradeLevel      = 1f;
+                        public float            damageMultiplier        = 1f;
+                        public float            damageUpgradeLevel      = 1f;
 
                         private float           upgradeInprovement = 20f;
                         public int towerCost;
@@ -47,6 +47,7 @@ using UnityEngine;
 
         private void Awake()
         {
+        targetList              = new List<Enemy>();
         if (soundSource == null) {soundSource = GetComponent<AudioSource>();}
 
         health   = towerType.health;
@@ -167,7 +168,7 @@ using UnityEngine;
 
     public void UpgradeHealth()
     {
-        if (healthUpgradeLevel < 4)
+        if (healthUpgradeLevel < 5)
         {
             float factor = maxHealth / 100 * upgradeInprovement;
             maxHealth = maxHealth + factor;
@@ -177,6 +178,35 @@ using UnityEngine;
         }
     }
 
+    public void UpgradeFireRate ()
+    {
+        if (fireRateUpgradeLevel < 5)
+        {
+            
+            fireRate = fireRate - 0.05f;
+            fireRateUpgradeLevel++;
+        }
+    }
+
+    public void UpgradeDamageMultiplier() 
+    {
+        if (damageUpgradeLevel < 5)
+        {
+
+            damageMultiplier = damageMultiplier + 0.5f;
+            damageUpgradeLevel++;
+        }
+    }
+
+    public void UpgradeRange()
+    {
+        if (rangeUpgradeLevel < 5)
+        {
+            Vector3 scaleChange = new Vector3(.7f, 0f, .7f);
+            targetZone.localScale += scaleChange;
+            rangeUpgradeLevel++;
+        }
+    }
 
     }
 

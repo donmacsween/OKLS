@@ -10,7 +10,7 @@ public class TowerManager : MonoBehaviour
                      public Tower          activeTower     = null;
     [SerializeField] private GameObject     towerContainer;
                      private GameObject     newTower;
-                     public  List<Tower>    towers          = new List<Tower>();
+                     public  List<Tower>    towers;
 
     private void Awake()
     {
@@ -23,6 +23,7 @@ public class TowerManager : MonoBehaviour
         {
             Instance = this;
         }
+        towers = new List<Tower>();
     }
     public void SetActiveTowerBase(TowerBase towerBase)
     {
@@ -43,7 +44,7 @@ public class TowerManager : MonoBehaviour
     {
         newTower = Instantiate(tower.towerPrefab,activeTowerBase.buildPoint.position,activeTowerBase.buildPoint.rotation);
         activeTowerBase.built = true;
-        towers.Add(newTower.GetComponent<Tower>());
+        towers.Add(newTower.gameObject.GetComponentInChildren<Tower>());
         UIManager.Instance.HidePanel();
     }
 

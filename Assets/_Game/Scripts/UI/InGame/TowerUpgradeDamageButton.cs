@@ -1,27 +1,25 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
-public class TowerUpgradeHeathButton : MonoBehaviour
+public class TowerUpgradeDamageButton : MonoBehaviour
 {
     private Tower tower;
-    [SerializeField] Button button;
-    [SerializeField] Image level1;
-    [SerializeField] Image level2;
-    [SerializeField] Image level3;
-    [SerializeField] Image level4;
-    [SerializeField] Image goldIcon;
-    [SerializeField] TMP_Text costText;
-    [SerializeField] TMP_Text repairCostText;
+    [SerializeField] private Button button;
+    [SerializeField] private Image level1;
+    [SerializeField] private Image level2;
+    [SerializeField] private Image level3;
+    [SerializeField] private Image level4;
+    [SerializeField] private Image goldIcon;
+    [SerializeField] private TMP_Text costText;
     private int cost;
     private float factor;
-
 
     private void Awake()
     {
         button = GetComponent<Button>();
-        button.onClick.AddListener(HealthUpgradeButtonClicked);
+        button.onClick.AddListener(DamageUpgradeButtonClicked);
     }
 
     private void OnEnable()
@@ -29,16 +27,16 @@ public class TowerUpgradeHeathButton : MonoBehaviour
         tower = TowerManager.Instance.GetActiveTower();
         UpdateButton();
     }
+   
+
 
     private void UpdateButton()
     {
-        factor = 20f * (tower.healthUpgradeLevel+1);
-        Debug.Log("xfactor: " + factor.ToString());
-        float working = tower.towerCost / 100f * factor;
-        Debug.Log("working " +(tower.towerCost / 100f * factor).ToString());
-        cost = (int)working;
+        factor = 20f * tower.damageUpgradeLevel;
+        Debug.Log("factor: " + factor.ToString());
+        cost = (int)((tower.towerCost / 100f) * factor);
         costText.text = cost.ToString();
-        if (cost <= MoneyManager.Instance.currentGold && tower.healthUpgradeLevel <4)
+        if (cost <= MoneyManager.Instance.currentGold && tower.damageUpgradeLevel < 5)
         {
             button.interactable = true;
             goldIcon.enabled = true;
@@ -55,21 +53,21 @@ public class TowerUpgradeHeathButton : MonoBehaviour
         level2.enabled = false;
         level3.enabled = false;
         level4.enabled = false;
-        switch (tower.healthUpgradeLevel)
+        switch (tower.damageUpgradeLevel)
         {
-            case 1:
-                level1.enabled = true;
-                break;
             case 2:
                 level1.enabled = true;
-                level2.enabled = true;
                 break;
             case 3:
                 level1.enabled = true;
                 level2.enabled = true;
-                level3.enabled = true;
                 break;
             case 4:
+                level1.enabled = true;
+                level2.enabled = true;
+                level3.enabled = true;
+                break;
+            case 5:
                 level1.enabled = true;
                 level2.enabled = true;
                 level3.enabled = true;
@@ -77,12 +75,10 @@ public class TowerUpgradeHeathButton : MonoBehaviour
                 break;
         }
     }
-
-    private void HealthUpgradeButtonClicked()
+    private void DamageUpgradeButtonClicked()
     {
         MoneyManager.Instance.DeductMoney(cost);
-        tower.UpgradeHealth();
+        tower.UpgradeDamageMultiplier();
         UpdateButton();
-        repairCostText.text = ((int)tower.health).ToString() + " / " + ((int)tower.maxHealth).ToString();
     }
 }

@@ -1,37 +1,59 @@
 
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Powers : MonoBehaviour
 {
     [SerializeField] Button damagebutton;
     [SerializeField] Button speedbutton;
-    public void CastSlow()
+
+    
+    [SerializeField] Button buyDamagebutton;
+    [SerializeField] Button buySpeedbutton;
+    [SerializeField] Button buyFreezebutton;
+
+    private bool freezeOnCoolDown = false;
+    private bool damageOnCoolDown = false;
+    private bool speedOnCoolDown = false;
+    public void CastSlow(InputAction.CallbackContext context)
     {
-        foreach (Enemy enemy in SpawnManager.Instance.activeEnemies)
+        if (context.phase.ToString() == "Started")
         {
-            enemy.Slow(1.5f,5f);
+            Debug.Log("Slow Cast");
+            foreach (Enemy enemy in SpawnManager.Instance.activeEnemies)
+            {
+                enemy.Slow(1.5f, 5f);
+            }
         }
     }
 
-    public void DoubleDamage()
+    public void DoubleDamage(InputAction.CallbackContext context)
     {
-        foreach (Tower towers in TowerManager.Instance.towers)
+        if (context.phase.ToString() == "Started")
         {
-            towers.damageMultiplier *= 2f;
-            damagebutton.interactable = false;
-            Invoke("NormalDamage", 5f);
+            Debug.Log("Double Damage");
+            foreach (Tower towers in TowerManager.Instance.towers)
+            {
+                towers.damageMultiplier *= 2f;
+                damagebutton.interactable = false;
+                Invoke("NormalDamage", 5f);
+            }
         }
 
     }
 
-    public void DoubleSpeed()
+    public void DoubleSpeed(InputAction.CallbackContext context)
     {
-        foreach (Tower towers in TowerManager.Instance.towers)
+        if (context.phase.ToString() == "Started")
         {
-            towers.fireRate *= 2f;
-            speedbutton.interactable = false;
-            Invoke("NormalSpeed", 5f);
+            Debug.Log("Double Speed");
+            foreach (Tower towers in TowerManager.Instance.towers)
+            {
+                towers.fireRate /= 1.5f;
+                speedbutton.interactable = false;
+                Invoke("NormalSpeed", 5f);
+            }
         }
     }
 
@@ -39,7 +61,7 @@ public class Powers : MonoBehaviour
     {
         foreach (Tower towers in TowerManager.Instance.towers)
         {
-            towers.fireRate /= 2f;
+            towers.fireRate *= 1.5f;
             speedbutton.interactable = true;
         }
     }

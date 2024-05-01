@@ -136,7 +136,7 @@ using UnityEngine;
             // Remove the gameobject from the scene
             Destroy(this.transform.parent.gameObject);
             // Record in the stats that we have lost a tower
-            ObjectiveManager.Instance.towersLost++;
+           // ObjectiveManager.Instance.towersLost++;
         }
 
         // Player Actions

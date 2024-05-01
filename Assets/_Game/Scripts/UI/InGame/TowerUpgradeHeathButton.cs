@@ -38,7 +38,7 @@ public class TowerUpgradeHeathButton : MonoBehaviour
         Debug.Log("working " +(tower.towerCost / 100f * factor).ToString());
         cost = (int)working;
         costText.text = cost.ToString();
-        if (cost <= MoneyManager.Instance.currentGold && tower.healthUpgradeLevel <4)
+        if (cost <= MoneyManager.Instance.currentGold && tower.healthUpgradeLevel <5)
         {
             button.interactable = true;
             goldIcon.enabled = true;
@@ -57,19 +57,19 @@ public class TowerUpgradeHeathButton : MonoBehaviour
         level4.enabled = false;
         switch (tower.healthUpgradeLevel)
         {
-            case 1:
-                level1.enabled = true;
-                break;
             case 2:
                 level1.enabled = true;
-                level2.enabled = true;
                 break;
             case 3:
                 level1.enabled = true;
                 level2.enabled = true;
-                level3.enabled = true;
                 break;
             case 4:
+                level1.enabled = true;
+                level2.enabled = true;
+                level3.enabled = true;
+                break;
+            case 5:
                 level1.enabled = true;
                 level2.enabled = true;
                 level3.enabled = true;

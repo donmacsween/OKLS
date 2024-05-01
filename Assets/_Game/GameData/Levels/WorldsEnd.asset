@@ -18,6 +18,7 @@ MonoBehaviour:
   nextLevel: {fileID: 11400000, guid: fbda65b7f8ec9104ea9dcdb55a477b5d, type: 2}
   startingGold: 95
   startingHealth: 0
-  spawnpoints: []
+  spawnpoints:
+  - {fileID: 0}
   waves: []
   startingDialog: {fileID: 0}

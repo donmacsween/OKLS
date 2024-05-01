@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
+
 using UnityEngine;
 
 public class MapRoller : MonoBehaviour
@@ -39,6 +37,7 @@ public class MapRoller : MonoBehaviour
     public void Rollup()
     {
         unrolling = false;
+
     }
     public void UnRoll()
     {

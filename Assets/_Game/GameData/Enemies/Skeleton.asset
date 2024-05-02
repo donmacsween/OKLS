@@ -18,5 +18,5 @@ MonoBehaviour:
   baseSpeed: 1
   baseArmour: 0.1
   baseMoney: 1
-  baseCastleDamage: 5
+  baseCastleDamage: 6
   baseTowerDamage: 10

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dea7d1f2966742f429ef16c0bd2c4140, type: 3}
+  m_Name: Tutorial
+  m_EditorClassIdentifier: 
+  characterDialog: Ah commander ! you are our last hope, we have been pushed back
+    to the very shores of our lands by this despicable horde and thier evil leader,
+    I have only you and a few trusted advisors left to help save our people
+  character: {fileID: 21300000, guid: a79494ecd839de94d801df910ac43736, type: 3}
+  nextDialog: {fileID: 0}
+  isEndOfDialog: 1

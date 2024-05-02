@@ -23,7 +23,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private GameObject                 cameraFocusTarget;
                      private bool                       pointerDown         = false;
                      private Vector2                    lastPosition        = Vector2.zero;
-                     private float                      dragSensitivity     = 5f;
+                     public float                       dragSensitivity     = 5f;
                      public  Vector4                    bounds; // Set from the bounds.cs script OnEnable.
 
 
@@ -96,6 +96,17 @@ public class InputManager : MonoBehaviour
     {
         ZoomOut();
     }
+
+    public void SetDragSensitivity(float sensitivity)
+    {
+        dragSensitivity = sensitivity;
+    }
+
+    public void SetInvertMovement(bool invert)
+    {
+        invertMovement = invert;
+    }
+
 
     private void MoveCameraTarget()
     {

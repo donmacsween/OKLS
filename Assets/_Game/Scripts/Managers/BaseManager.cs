@@ -18,6 +18,7 @@ public class BaseManager : MonoBehaviour
         // singleton logic
         if (Instance != null && Instance != this) { Destroy(this); }
         else { Instance = this; }
+        maxHealth = currentHealth;
     }
     
     // Used by LevelManager.cs to set the base health at the start of a level. 
@@ -31,14 +32,18 @@ public class BaseManager : MonoBehaviour
     // Used by Base.cs whenever a enemy makes it to the base.
     public void DeductHealth(int amount)
     {
+        bool oneShot = true;
         currentHealth -= amount;
-        if (currentHealth <= 0) 
+        
+        if (currentHealth < (maxHealth / 3) && oneShot)
+        {
+        AudioManager.Instance.PanicMusic();
+            oneShot = false;
+        }
+        if (currentHealth <= 0)
         {
             UIManager.Instance.ShowPanel(UIManager.Instance.DefeatPanel);
-        }
-        if (currentHealth > (maxHealth/100)*10)
-        {
-        //  plays panic music when the player is <= %10 health
+            AudioManager.Instance.LooseMusic();
         }
         OnBaseHealthUpdated();
     }

@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public GameObject DefeatPanel;
     public GameObject DialogPanel;
     public GameObject WavePanel;
+    public GameObject PausePanel;
     public GameObject ActivePanel;
     public DialogSO   currentDialog;
     

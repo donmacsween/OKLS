@@ -122,7 +122,7 @@ using UnityEngine;
         public void TakeDamage(float damage)
         {
             health = health - (damage);
-            if (health < 0) {DestroyTower();}
+            if (health <= 0) {DestroyTower();}
         }
 
        

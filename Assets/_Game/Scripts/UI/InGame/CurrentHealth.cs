@@ -11,7 +11,17 @@ public class CurrentHealth : MonoBehaviour
     private void Start() {UpdateHealth();}
     private void UpdateHealth()
     { 
-        if (MoneyManager.Instance != null) {healthLable.text = BaseManager.Instance.currentHealth.ToString();}
+        if (MoneyManager.Instance != null)
+        {
+            if (BaseManager.Instance.currentHealth >= 0)
+            {
+                healthLable.text = BaseManager.Instance.currentHealth.ToString();
+            }
+            else
+            {
+                healthLable.text = "0";
+            }
+        }
     }
 }
 

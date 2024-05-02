@@ -12,6 +12,10 @@ public class MapRoller : MonoBehaviour
                      private bool        unrolling       = true;
     void OnEnable()
     {
+#if UNITY_EDITOR
+        rollSpeed = 0.6f;
+#endif
+
         rend = GetComponent<Renderer>();
         rollValue = closedRollValue;
         rend.material.shader = Shader.Find("Shader Graphs/MapRollDoubleSidedURP");
@@ -22,13 +26,13 @@ public class MapRoller : MonoBehaviour
     {       
            if (rollValue >= closedRollValue && unrolling==false)
            {
-                rollValue -= rollSpeed;
+                rollValue -= rollSpeed * Time.deltaTime;
                 rend.material.SetFloat("Vector1_98d33b1d219b486e97f4a6d459a007a3", rollValue);
            }
             
         if ((rollValue < openRollValue) && unrolling == true)
         {
-                rollValue += rollSpeed;
+                rollValue += rollSpeed*Time.deltaTime;
                 rend.material.SetFloat("Vector1_98d33b1d219b486e97f4a6d459a007a3", rollValue);
         }
         if (rollValue >= 1) {mapButtons.SetActive(true);}

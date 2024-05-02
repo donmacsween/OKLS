@@ -15,7 +15,7 @@ public class TowerUpgradeFireRateButton : MonoBehaviour
     [SerializeField] private TMP_Text   costText;
                      private int        cost;
                      private float      factor;
-
+    public bool isDisabled;
     private void Awake()
     {
         button = GetComponent<Button>();
@@ -34,7 +34,7 @@ public class TowerUpgradeFireRateButton : MonoBehaviour
         Debug.Log("factor: " + factor.ToString());
         cost = (int)((tower.towerCost / 100f) * factor);
         costText.text = cost.ToString();
-        if (cost <= MoneyManager.Instance.currentGold && tower.fireRateUpgradeLevel < 5)
+        if (cost <= MoneyManager.Instance.currentGold && tower.fireRateUpgradeLevel < 5 && !isDisabled)
         {
             button.interactable = true;
             goldIcon.enabled = true;

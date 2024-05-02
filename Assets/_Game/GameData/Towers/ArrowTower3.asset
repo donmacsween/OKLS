@@ -15,13 +15,17 @@ MonoBehaviour:
   towerPrefab: {fileID: 1365167104515735679, guid: 77faf6892404e4d4da59383073bfaa21,
     type: 3}
   towerName: Arrow  3
-  towerCost: 500
+  towerCost: 800
   towerIcon: {fileID: 21300000, guid: 5169bc4e1a551734ca59b071889005db, type: 3}
   towerUnlocked: 1
-  maxhealth: 100
   health: 100
   fireRate: 0.7
   range: 10
   damageMultiplier: 2
   repairCostMultiplier: 0.5
-  towerFiringSounds: []
+  fireSounds:
+  - {fileID: 8300000, guid: e7cae8c7d20fd28499440e7b87fb400f, type: 3}
+  - {fileID: 8300000, guid: de3b9e7a9860fcb468f4895c3ae39e11, type: 3}
+  - {fileID: 8300000, guid: 7a0fef98f86d33e42806fe81dba30bc2, type: 3}
+  - {fileID: 8300000, guid: 1e6b16b3e17918c40998258be5569885, type: 3}
+  - {fileID: 8300000, guid: 8e1c3c517f44cf046a103545f1d75ad0, type: 3}

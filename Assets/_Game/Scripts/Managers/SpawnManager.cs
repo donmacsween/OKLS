@@ -36,8 +36,7 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        StartWave();
-        //  replace with call from UI
+        UIManager.Instance.ShowPanel(UIManager.Instance.DialogPanel);
     }
 
     public void StartWave()
@@ -89,7 +88,8 @@ public class SpawnManager : MonoBehaviour
         // check for win condition
         if (activeEnemies.Count == 0)
         {
-            Debug.Log("All Dead");
+            UIManager.Instance.ShowPanel(UIManager.Instance.WinPanel);
+            AudioManager.Instance.WinMusic();
             EndWave();
         }
     }

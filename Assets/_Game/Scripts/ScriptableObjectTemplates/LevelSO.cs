@@ -4,12 +4,12 @@ using UnityEngine;
 public class LevelSO : ScriptableObject
 {
     public string       sceneName;
+    public string       sceneLable;
     public Sprite       background;
     public AudioClip    music;
     public LevelSO      nextLevel;
     public int          startingGold;
     public int          startingHealth;
-    public Transform[]  spawnpoints;
     public WaveSO[]     waves;
     public DialogSO     startingDialog;
 }

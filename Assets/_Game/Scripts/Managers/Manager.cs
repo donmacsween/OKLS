@@ -17,7 +17,7 @@ public class Manager : MonoBehaviour
     // Unity Methods
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         EnforceSingleton();
         
     }

@@ -14,23 +14,48 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private       AudioSource  audioSource;
                      public        AudioClip    DefaultMusicLoop;
                      public        AudioClip    LevelMusicLoop;
+                     public        AudioClip    winMusicLoop;
+                     public        AudioClip    looseMusicLoop;
+                     public        AudioClip    panicMusicLoop;
     
-    // Unity Methods
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         EnforceSingleton();
-        audioSource = GetComponent<AudioSource>();
+        PlayMusic(LevelMusicLoop);
     }
-
-    // Public Methods 
-
-    // Private Methods   
+ 
     private void EnforceSingleton()
     {
         if (Instance != null && Instance != this)
         { Destroy(this); }
         else
         { Instance = this; }
+    }
+
+    public void LooseMusic()
+    {
+        PlayMusic(looseMusicLoop);
+    }
+    public void WinMusic()
+    {
+        PlayMusic(winMusicLoop);
+    }
+    public void PanicMusic()
+    {
+        PlayMusic(panicMusicLoop);
+    }
+    public void PlayMusic(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+            audioSource.loop = true;
+            audioSource.clip = clip;
+            audioSource.Play();
+        }
     }
 }

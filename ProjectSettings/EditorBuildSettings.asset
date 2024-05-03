@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Game/Scenes/WorldsEnd.unity
     guid: 3142bd89299c9e745b92eb0557251b33
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Game/Scenes/Meadows.unity
     guid: 886182ea4c0f7a4479cfbe8a3308f9e7
   m_configObjects:

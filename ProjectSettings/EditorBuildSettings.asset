@@ -11,9 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Game/Scenes/WorldsEnd.unity
     guid: 3142bd89299c9e745b92eb0557251b33
-  - enabled: 0
+  - enabled: 1
     path: Assets/_Game/Scenes/Meadows.unity
-    guid: 886182ea4c0f7a4479cfbe8a3308f9e7
+    guid: 30d25c09a1954d449a5e452a9d50776e
+  - enabled: 1
+    path: Assets/_Game/Scenes/Rivers.unity
+    guid: 47b7291da2190184e987b037109c1aac
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000,
       guid: 55b4c08a20360144ea0a90e159864b7d, type: 2}

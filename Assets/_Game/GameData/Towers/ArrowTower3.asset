@@ -17,7 +17,7 @@ MonoBehaviour:
   towerName: Arrow  3
   towerCost: 800
   towerIcon: {fileID: 21300000, guid: 5169bc4e1a551734ca59b071889005db, type: 3}
-  towerUnlocked: 1
+  towerUnlocked: 0
   health: 100
   fireRate: 0.7
   range: 10

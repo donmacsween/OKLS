@@ -16,7 +16,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 128260, guid: 616cc160fcb3b124b8e0fc587258594b, type: 3}
   baseHealth: 10
   baseSpeed: 1.2
-  baseArmour: 0.1
+  baseArmour: 0.2
   baseMoney: 1
   baseCastleDamage: 10
   baseTowerDamage: 10
